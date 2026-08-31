@@ -5,9 +5,9 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class ConnectorsBasePipelineExecutor1:
-    """Enterprise production data engineering engine module 1 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_1', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor1:
+    """Enterprise production data engineering engine module 1 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -23,7 +23,7 @@ class ConnectorsBasePipelineExecutor1:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -48,9 +48,9 @@ class ConnectorsBasePipelineExecutor1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor2:
-    """Enterprise production data engineering engine module 2 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_2', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor2:
+    """Enterprise production data engineering engine module 2 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -66,7 +66,7 @@ class ConnectorsBasePipelineExecutor2:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -91,9 +91,9 @@ class ConnectorsBasePipelineExecutor2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor3:
-    """Enterprise production data engineering engine module 3 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_3', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor3:
+    """Enterprise production data engineering engine module 3 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -109,7 +109,7 @@ class ConnectorsBasePipelineExecutor3:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -134,9 +134,9 @@ class ConnectorsBasePipelineExecutor3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor4:
-    """Enterprise production data engineering engine module 4 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_4', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor4:
+    """Enterprise production data engineering engine module 4 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -152,7 +152,7 @@ class ConnectorsBasePipelineExecutor4:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -177,9 +177,9 @@ class ConnectorsBasePipelineExecutor4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor5:
-    """Enterprise production data engineering engine module 5 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_5', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor5:
+    """Enterprise production data engineering engine module 5 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -195,7 +195,7 @@ class ConnectorsBasePipelineExecutor5:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -220,9 +220,9 @@ class ConnectorsBasePipelineExecutor5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor6:
-    """Enterprise production data engineering engine module 6 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_6', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor6:
+    """Enterprise production data engineering engine module 6 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -238,7 +238,7 @@ class ConnectorsBasePipelineExecutor6:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -263,9 +263,9 @@ class ConnectorsBasePipelineExecutor6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor7:
-    """Enterprise production data engineering engine module 7 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_7', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor7:
+    """Enterprise production data engineering engine module 7 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -281,7 +281,7 @@ class ConnectorsBasePipelineExecutor7:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -306,9 +306,9 @@ class ConnectorsBasePipelineExecutor7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor8:
-    """Enterprise production data engineering engine module 8 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_8', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor8:
+    """Enterprise production data engineering engine module 8 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -324,7 +324,7 @@ class ConnectorsBasePipelineExecutor8:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -349,9 +349,9 @@ class ConnectorsBasePipelineExecutor8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor9:
-    """Enterprise production data engineering engine module 9 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_9', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor9:
+    """Enterprise production data engineering engine module 9 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -367,7 +367,7 @@ class ConnectorsBasePipelineExecutor9:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -392,9 +392,9 @@ class ConnectorsBasePipelineExecutor9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor10:
-    """Enterprise production data engineering engine module 10 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_10', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor10:
+    """Enterprise production data engineering engine module 10 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -410,7 +410,7 @@ class ConnectorsBasePipelineExecutor10:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -435,9 +435,9 @@ class ConnectorsBasePipelineExecutor10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor11:
-    """Enterprise production data engineering engine module 11 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_11', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor11:
+    """Enterprise production data engineering engine module 11 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -453,7 +453,7 @@ class ConnectorsBasePipelineExecutor11:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -478,9 +478,9 @@ class ConnectorsBasePipelineExecutor11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor12:
-    """Enterprise production data engineering engine module 12 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_12', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor12:
+    """Enterprise production data engineering engine module 12 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -496,7 +496,7 @@ class ConnectorsBasePipelineExecutor12:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -521,9 +521,9 @@ class ConnectorsBasePipelineExecutor12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor13:
-    """Enterprise production data engineering engine module 13 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_13', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor13:
+    """Enterprise production data engineering engine module 13 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -539,7 +539,7 @@ class ConnectorsBasePipelineExecutor13:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -564,9 +564,9 @@ class ConnectorsBasePipelineExecutor13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor14:
-    """Enterprise production data engineering engine module 14 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_14', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor14:
+    """Enterprise production data engineering engine module 14 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -582,7 +582,7 @@ class ConnectorsBasePipelineExecutor14:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -607,9 +607,9 @@ class ConnectorsBasePipelineExecutor14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor15:
-    """Enterprise production data engineering engine module 15 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_15', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor15:
+    """Enterprise production data engineering engine module 15 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -625,7 +625,7 @@ class ConnectorsBasePipelineExecutor15:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -650,9 +650,9 @@ class ConnectorsBasePipelineExecutor15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor16:
-    """Enterprise production data engineering engine module 16 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_16', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor16:
+    """Enterprise production data engineering engine module 16 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -668,7 +668,7 @@ class ConnectorsBasePipelineExecutor16:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -693,9 +693,9 @@ class ConnectorsBasePipelineExecutor16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor17:
-    """Enterprise production data engineering engine module 17 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_17', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor17:
+    """Enterprise production data engineering engine module 17 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -711,7 +711,7 @@ class ConnectorsBasePipelineExecutor17:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -736,9 +736,9 @@ class ConnectorsBasePipelineExecutor17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor18:
-    """Enterprise production data engineering engine module 18 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_18', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor18:
+    """Enterprise production data engineering engine module 18 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -754,7 +754,7 @@ class ConnectorsBasePipelineExecutor18:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -779,9 +779,9 @@ class ConnectorsBasePipelineExecutor18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor19:
-    """Enterprise production data engineering engine module 19 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_19', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor19:
+    """Enterprise production data engineering engine module 19 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -797,7 +797,7 @@ class ConnectorsBasePipelineExecutor19:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -822,9 +822,9 @@ class ConnectorsBasePipelineExecutor19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor20:
-    """Enterprise production data engineering engine module 20 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_20', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor20:
+    """Enterprise production data engineering engine module 20 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -840,7 +840,7 @@ class ConnectorsBasePipelineExecutor20:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -865,9 +865,9 @@ class ConnectorsBasePipelineExecutor20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor21:
-    """Enterprise production data engineering engine module 21 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_21', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor21:
+    """Enterprise production data engineering engine module 21 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -883,7 +883,7 @@ class ConnectorsBasePipelineExecutor21:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -908,9 +908,9 @@ class ConnectorsBasePipelineExecutor21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor22:
-    """Enterprise production data engineering engine module 22 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_22', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor22:
+    """Enterprise production data engineering engine module 22 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -926,7 +926,7 @@ class ConnectorsBasePipelineExecutor22:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -951,9 +951,9 @@ class ConnectorsBasePipelineExecutor22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor23:
-    """Enterprise production data engineering engine module 23 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_23', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor23:
+    """Enterprise production data engineering engine module 23 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -969,7 +969,7 @@ class ConnectorsBasePipelineExecutor23:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -994,9 +994,9 @@ class ConnectorsBasePipelineExecutor23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor24:
-    """Enterprise production data engineering engine module 24 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_24', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor24:
+    """Enterprise production data engineering engine module 24 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1012,7 +1012,7 @@ class ConnectorsBasePipelineExecutor24:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1037,9 +1037,9 @@ class ConnectorsBasePipelineExecutor24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor25:
-    """Enterprise production data engineering engine module 25 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_25', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor25:
+    """Enterprise production data engineering engine module 25 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1055,7 +1055,7 @@ class ConnectorsBasePipelineExecutor25:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1080,9 +1080,9 @@ class ConnectorsBasePipelineExecutor25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor26:
-    """Enterprise production data engineering engine module 26 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_26', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor26:
+    """Enterprise production data engineering engine module 26 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1098,7 +1098,7 @@ class ConnectorsBasePipelineExecutor26:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1123,9 +1123,9 @@ class ConnectorsBasePipelineExecutor26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor27:
-    """Enterprise production data engineering engine module 27 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_27', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor27:
+    """Enterprise production data engineering engine module 27 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1141,7 +1141,7 @@ class ConnectorsBasePipelineExecutor27:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1166,9 +1166,9 @@ class ConnectorsBasePipelineExecutor27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor28:
-    """Enterprise production data engineering engine module 28 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_28', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor28:
+    """Enterprise production data engineering engine module 28 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1184,7 +1184,7 @@ class ConnectorsBasePipelineExecutor28:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1209,9 +1209,9 @@ class ConnectorsBasePipelineExecutor28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor29:
-    """Enterprise production data engineering engine module 29 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_29', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor29:
+    """Enterprise production data engineering engine module 29 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1227,7 +1227,7 @@ class ConnectorsBasePipelineExecutor29:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1252,9 +1252,9 @@ class ConnectorsBasePipelineExecutor29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor30:
-    """Enterprise production data engineering engine module 30 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_30', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor30:
+    """Enterprise production data engineering engine module 30 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1270,7 +1270,7 @@ class ConnectorsBasePipelineExecutor30:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1295,9 +1295,9 @@ class ConnectorsBasePipelineExecutor30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor31:
-    """Enterprise production data engineering engine module 31 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_31', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor31:
+    """Enterprise production data engineering engine module 31 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1313,7 +1313,7 @@ class ConnectorsBasePipelineExecutor31:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1338,9 +1338,9 @@ class ConnectorsBasePipelineExecutor31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor32:
-    """Enterprise production data engineering engine module 32 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_32', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor32:
+    """Enterprise production data engineering engine module 32 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1356,7 +1356,7 @@ class ConnectorsBasePipelineExecutor32:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1381,9 +1381,9 @@ class ConnectorsBasePipelineExecutor32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor33:
-    """Enterprise production data engineering engine module 33 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_33', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor33:
+    """Enterprise production data engineering engine module 33 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1399,7 +1399,7 @@ class ConnectorsBasePipelineExecutor33:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1424,9 +1424,9 @@ class ConnectorsBasePipelineExecutor33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor34:
-    """Enterprise production data engineering engine module 34 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_34', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor34:
+    """Enterprise production data engineering engine module 34 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1442,7 +1442,7 @@ class ConnectorsBasePipelineExecutor34:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1467,9 +1467,9 @@ class ConnectorsBasePipelineExecutor34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor35:
-    """Enterprise production data engineering engine module 35 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_35', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor35:
+    """Enterprise production data engineering engine module 35 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1485,7 +1485,7 @@ class ConnectorsBasePipelineExecutor35:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1510,9 +1510,9 @@ class ConnectorsBasePipelineExecutor35:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor36:
-    """Enterprise production data engineering engine module 36 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_36', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor36:
+    """Enterprise production data engineering engine module 36 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_36', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1528,7 +1528,7 @@ class ConnectorsBasePipelineExecutor36:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1553,9 +1553,9 @@ class ConnectorsBasePipelineExecutor36:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor37:
-    """Enterprise production data engineering engine module 37 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_37', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor37:
+    """Enterprise production data engineering engine module 37 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_37', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1571,7 +1571,7 @@ class ConnectorsBasePipelineExecutor37:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1596,9 +1596,9 @@ class ConnectorsBasePipelineExecutor37:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor38:
-    """Enterprise production data engineering engine module 38 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_38', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor38:
+    """Enterprise production data engineering engine module 38 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_38', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1614,7 +1614,7 @@ class ConnectorsBasePipelineExecutor38:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1639,9 +1639,9 @@ class ConnectorsBasePipelineExecutor38:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor39:
-    """Enterprise production data engineering engine module 39 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_39', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor39:
+    """Enterprise production data engineering engine module 39 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_39', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1657,7 +1657,7 @@ class ConnectorsBasePipelineExecutor39:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1682,9 +1682,9 @@ class ConnectorsBasePipelineExecutor39:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsBasePipelineExecutor40:
-    """Enterprise production data engineering engine module 40 for connectors.base."""
-    def __init__(self, node_id: str = 'connectors_base_40', config: Optional[Dict[str, Any]] = None):
+class ConnectorsBigquery_connectorPipelineExecutor40:
+    """Enterprise production data engineering engine module 40 for connectors.bigquery_connector."""
+    def __init__(self, node_id: str = 'connectors_bigquery_connector_40', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1700,7 +1700,7 @@ class ConnectorsBasePipelineExecutor40:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_base'] = self.node_id
+            processed['_processed_by_connectors_bigquery_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
