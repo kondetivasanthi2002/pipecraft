@@ -1,0 +1,30 @@
+system:
+  app_name: "PipeCraft Engine"
+  environment: "production"
+  log_level: "INFO"
+  max_concurrent_pipelines: 64
+  default_timeout_seconds: 3600
+engine:
+  async_pool_size: 32
+  max_memory_mb: 4096
+  gc_threshold_percent: 85
+  enable_circuit_breaker: true
+  default_retry_attempts: 3
+  default_backoff_factor: 2.0
+storage:
+  checkpoint_dir: "./var/checkpoints"
+  state_backend: "sqlite"
+  sqlite_path: "./var/pipecraft_state.db"
+  redis_url: "redis://localhost:6379/0"
+telemetry:
+  enable_prometheus: true
+  prometheus_port: 9090
+  enable_otel_tracing: true
+  otel_endpoint: "http://localhost:4317"
+  log_format: "json"
+api:
+  host: "0.0.0.0"
+  port: 8000
+  enable_cors: true
+  jwt_secret_key: "secret-key"
+  api_key_header: "X-PipeCraft-API-Key"
