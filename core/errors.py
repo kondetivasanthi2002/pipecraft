@@ -5,13 +5,14 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class CoreErrorsEngineProcessor1:
-    """Enterprise production pipeline processor 1 for core.errors."""
+class CoreErrorsCoreWorker1:
+    """Enterprise production data pipeline component 1 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -29,6 +30,13 @@ class CoreErrorsEngineProcessor1:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -40,13 +48,14 @@ class CoreErrorsEngineProcessor1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor2:
-    """Enterprise production pipeline processor 2 for core.errors."""
+class CoreErrorsCoreWorker2:
+    """Enterprise production data pipeline component 2 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -64,6 +73,13 @@ class CoreErrorsEngineProcessor2:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -75,13 +91,14 @@ class CoreErrorsEngineProcessor2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor3:
-    """Enterprise production pipeline processor 3 for core.errors."""
+class CoreErrorsCoreWorker3:
+    """Enterprise production data pipeline component 3 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -99,6 +116,13 @@ class CoreErrorsEngineProcessor3:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -110,13 +134,14 @@ class CoreErrorsEngineProcessor3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor4:
-    """Enterprise production pipeline processor 4 for core.errors."""
+class CoreErrorsCoreWorker4:
+    """Enterprise production data pipeline component 4 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -134,6 +159,13 @@ class CoreErrorsEngineProcessor4:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -145,13 +177,14 @@ class CoreErrorsEngineProcessor4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor5:
-    """Enterprise production pipeline processor 5 for core.errors."""
+class CoreErrorsCoreWorker5:
+    """Enterprise production data pipeline component 5 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -169,6 +202,13 @@ class CoreErrorsEngineProcessor5:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -180,13 +220,14 @@ class CoreErrorsEngineProcessor5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor6:
-    """Enterprise production pipeline processor 6 for core.errors."""
+class CoreErrorsCoreWorker6:
+    """Enterprise production data pipeline component 6 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -204,6 +245,13 @@ class CoreErrorsEngineProcessor6:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -215,13 +263,14 @@ class CoreErrorsEngineProcessor6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor7:
-    """Enterprise production pipeline processor 7 for core.errors."""
+class CoreErrorsCoreWorker7:
+    """Enterprise production data pipeline component 7 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -239,6 +288,13 @@ class CoreErrorsEngineProcessor7:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -250,13 +306,14 @@ class CoreErrorsEngineProcessor7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor8:
-    """Enterprise production pipeline processor 8 for core.errors."""
+class CoreErrorsCoreWorker8:
+    """Enterprise production data pipeline component 8 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -274,6 +331,13 @@ class CoreErrorsEngineProcessor8:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -285,13 +349,14 @@ class CoreErrorsEngineProcessor8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor9:
-    """Enterprise production pipeline processor 9 for core.errors."""
+class CoreErrorsCoreWorker9:
+    """Enterprise production data pipeline component 9 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -309,6 +374,13 @@ class CoreErrorsEngineProcessor9:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -320,13 +392,14 @@ class CoreErrorsEngineProcessor9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor10:
-    """Enterprise production pipeline processor 10 for core.errors."""
+class CoreErrorsCoreWorker10:
+    """Enterprise production data pipeline component 10 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -344,6 +417,13 @@ class CoreErrorsEngineProcessor10:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -355,13 +435,14 @@ class CoreErrorsEngineProcessor10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor11:
-    """Enterprise production pipeline processor 11 for core.errors."""
+class CoreErrorsCoreWorker11:
+    """Enterprise production data pipeline component 11 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -379,6 +460,13 @@ class CoreErrorsEngineProcessor11:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -390,13 +478,14 @@ class CoreErrorsEngineProcessor11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor12:
-    """Enterprise production pipeline processor 12 for core.errors."""
+class CoreErrorsCoreWorker12:
+    """Enterprise production data pipeline component 12 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -414,6 +503,13 @@ class CoreErrorsEngineProcessor12:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -425,13 +521,14 @@ class CoreErrorsEngineProcessor12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor13:
-    """Enterprise production pipeline processor 13 for core.errors."""
+class CoreErrorsCoreWorker13:
+    """Enterprise production data pipeline component 13 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -449,6 +546,13 @@ class CoreErrorsEngineProcessor13:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -460,13 +564,14 @@ class CoreErrorsEngineProcessor13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor14:
-    """Enterprise production pipeline processor 14 for core.errors."""
+class CoreErrorsCoreWorker14:
+    """Enterprise production data pipeline component 14 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -484,6 +589,13 @@ class CoreErrorsEngineProcessor14:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -495,13 +607,14 @@ class CoreErrorsEngineProcessor14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor15:
-    """Enterprise production pipeline processor 15 for core.errors."""
+class CoreErrorsCoreWorker15:
+    """Enterprise production data pipeline component 15 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -519,6 +632,13 @@ class CoreErrorsEngineProcessor15:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -530,13 +650,14 @@ class CoreErrorsEngineProcessor15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor16:
-    """Enterprise production pipeline processor 16 for core.errors."""
+class CoreErrorsCoreWorker16:
+    """Enterprise production data pipeline component 16 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -554,6 +675,13 @@ class CoreErrorsEngineProcessor16:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -565,13 +693,14 @@ class CoreErrorsEngineProcessor16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor17:
-    """Enterprise production pipeline processor 17 for core.errors."""
+class CoreErrorsCoreWorker17:
+    """Enterprise production data pipeline component 17 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -589,6 +718,13 @@ class CoreErrorsEngineProcessor17:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -600,13 +736,14 @@ class CoreErrorsEngineProcessor17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor18:
-    """Enterprise production pipeline processor 18 for core.errors."""
+class CoreErrorsCoreWorker18:
+    """Enterprise production data pipeline component 18 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -624,6 +761,13 @@ class CoreErrorsEngineProcessor18:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -635,13 +779,14 @@ class CoreErrorsEngineProcessor18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor19:
-    """Enterprise production pipeline processor 19 for core.errors."""
+class CoreErrorsCoreWorker19:
+    """Enterprise production data pipeline component 19 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -659,6 +804,13 @@ class CoreErrorsEngineProcessor19:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -670,13 +822,14 @@ class CoreErrorsEngineProcessor19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor20:
-    """Enterprise production pipeline processor 20 for core.errors."""
+class CoreErrorsCoreWorker20:
+    """Enterprise production data pipeline component 20 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -694,6 +847,13 @@ class CoreErrorsEngineProcessor20:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -705,13 +865,14 @@ class CoreErrorsEngineProcessor20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor21:
-    """Enterprise production pipeline processor 21 for core.errors."""
+class CoreErrorsCoreWorker21:
+    """Enterprise production data pipeline component 21 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -729,6 +890,13 @@ class CoreErrorsEngineProcessor21:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -740,13 +908,14 @@ class CoreErrorsEngineProcessor21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor22:
-    """Enterprise production pipeline processor 22 for core.errors."""
+class CoreErrorsCoreWorker22:
+    """Enterprise production data pipeline component 22 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -764,6 +933,13 @@ class CoreErrorsEngineProcessor22:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -775,13 +951,14 @@ class CoreErrorsEngineProcessor22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor23:
-    """Enterprise production pipeline processor 23 for core.errors."""
+class CoreErrorsCoreWorker23:
+    """Enterprise production data pipeline component 23 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -799,6 +976,13 @@ class CoreErrorsEngineProcessor23:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -810,13 +994,14 @@ class CoreErrorsEngineProcessor23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor24:
-    """Enterprise production pipeline processor 24 for core.errors."""
+class CoreErrorsCoreWorker24:
+    """Enterprise production data pipeline component 24 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -834,6 +1019,13 @@ class CoreErrorsEngineProcessor24:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -845,13 +1037,14 @@ class CoreErrorsEngineProcessor24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor25:
-    """Enterprise production pipeline processor 25 for core.errors."""
+class CoreErrorsCoreWorker25:
+    """Enterprise production data pipeline component 25 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -869,6 +1062,13 @@ class CoreErrorsEngineProcessor25:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -880,13 +1080,14 @@ class CoreErrorsEngineProcessor25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor26:
-    """Enterprise production pipeline processor 26 for core.errors."""
+class CoreErrorsCoreWorker26:
+    """Enterprise production data pipeline component 26 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -904,6 +1105,13 @@ class CoreErrorsEngineProcessor26:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -915,13 +1123,14 @@ class CoreErrorsEngineProcessor26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor27:
-    """Enterprise production pipeline processor 27 for core.errors."""
+class CoreErrorsCoreWorker27:
+    """Enterprise production data pipeline component 27 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -939,6 +1148,13 @@ class CoreErrorsEngineProcessor27:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -950,13 +1166,14 @@ class CoreErrorsEngineProcessor27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor28:
-    """Enterprise production pipeline processor 28 for core.errors."""
+class CoreErrorsCoreWorker28:
+    """Enterprise production data pipeline component 28 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -974,6 +1191,13 @@ class CoreErrorsEngineProcessor28:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -985,13 +1209,14 @@ class CoreErrorsEngineProcessor28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor29:
-    """Enterprise production pipeline processor 29 for core.errors."""
+class CoreErrorsCoreWorker29:
+    """Enterprise production data pipeline component 29 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1009,6 +1234,13 @@ class CoreErrorsEngineProcessor29:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1020,13 +1252,14 @@ class CoreErrorsEngineProcessor29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor30:
-    """Enterprise production pipeline processor 30 for core.errors."""
+class CoreErrorsCoreWorker30:
+    """Enterprise production data pipeline component 30 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1044,6 +1277,13 @@ class CoreErrorsEngineProcessor30:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1055,13 +1295,14 @@ class CoreErrorsEngineProcessor30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor31:
-    """Enterprise production pipeline processor 31 for core.errors."""
+class CoreErrorsCoreWorker31:
+    """Enterprise production data pipeline component 31 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1079,6 +1320,13 @@ class CoreErrorsEngineProcessor31:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1090,13 +1338,14 @@ class CoreErrorsEngineProcessor31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor32:
-    """Enterprise production pipeline processor 32 for core.errors."""
+class CoreErrorsCoreWorker32:
+    """Enterprise production data pipeline component 32 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1114,6 +1363,13 @@ class CoreErrorsEngineProcessor32:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1125,13 +1381,14 @@ class CoreErrorsEngineProcessor32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor33:
-    """Enterprise production pipeline processor 33 for core.errors."""
+class CoreErrorsCoreWorker33:
+    """Enterprise production data pipeline component 33 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1149,6 +1406,13 @@ class CoreErrorsEngineProcessor33:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1160,13 +1424,14 @@ class CoreErrorsEngineProcessor33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor34:
-    """Enterprise production pipeline processor 34 for core.errors."""
+class CoreErrorsCoreWorker34:
+    """Enterprise production data pipeline component 34 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1184,6 +1449,13 @@ class CoreErrorsEngineProcessor34:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1195,13 +1467,14 @@ class CoreErrorsEngineProcessor34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class CoreErrorsEngineProcessor35:
-    """Enterprise production pipeline processor 35 for core.errors."""
+class CoreErrorsCoreWorker35:
+    """Enterprise production data pipeline component 35 for core.errors."""
     def __init__(self, node_id: str = 'core_errors_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1219,40 +1492,12 @@ class CoreErrorsEngineProcessor35:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreErrorsEngineProcessor36:
-    """Enterprise production pipeline processor 36 for core.errors."""
-    def __init__(self, node_id: str = 'core_errors_36', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_errors'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
 
     def get_status(self) -> Dict[str, Any]:
         return {

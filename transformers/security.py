@@ -20,13 +20,14 @@ class PIIMaskerTransformer:
             res.append(item)
         return res
 
-class TransformersSecurityEngineProcessor1:
-    """Enterprise production pipeline processor 1 for transformers.security."""
+class TransformersSecurityCoreWorker1:
+    """Enterprise production data pipeline component 1 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -44,6 +45,13 @@ class TransformersSecurityEngineProcessor1:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -55,13 +63,14 @@ class TransformersSecurityEngineProcessor1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor2:
-    """Enterprise production pipeline processor 2 for transformers.security."""
+class TransformersSecurityCoreWorker2:
+    """Enterprise production data pipeline component 2 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -79,6 +88,13 @@ class TransformersSecurityEngineProcessor2:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -90,13 +106,14 @@ class TransformersSecurityEngineProcessor2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor3:
-    """Enterprise production pipeline processor 3 for transformers.security."""
+class TransformersSecurityCoreWorker3:
+    """Enterprise production data pipeline component 3 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -114,6 +131,13 @@ class TransformersSecurityEngineProcessor3:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -125,13 +149,14 @@ class TransformersSecurityEngineProcessor3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor4:
-    """Enterprise production pipeline processor 4 for transformers.security."""
+class TransformersSecurityCoreWorker4:
+    """Enterprise production data pipeline component 4 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -149,6 +174,13 @@ class TransformersSecurityEngineProcessor4:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -160,13 +192,14 @@ class TransformersSecurityEngineProcessor4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor5:
-    """Enterprise production pipeline processor 5 for transformers.security."""
+class TransformersSecurityCoreWorker5:
+    """Enterprise production data pipeline component 5 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -184,6 +217,13 @@ class TransformersSecurityEngineProcessor5:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -195,13 +235,14 @@ class TransformersSecurityEngineProcessor5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor6:
-    """Enterprise production pipeline processor 6 for transformers.security."""
+class TransformersSecurityCoreWorker6:
+    """Enterprise production data pipeline component 6 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -219,6 +260,13 @@ class TransformersSecurityEngineProcessor6:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -230,13 +278,14 @@ class TransformersSecurityEngineProcessor6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor7:
-    """Enterprise production pipeline processor 7 for transformers.security."""
+class TransformersSecurityCoreWorker7:
+    """Enterprise production data pipeline component 7 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -254,6 +303,13 @@ class TransformersSecurityEngineProcessor7:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -265,13 +321,14 @@ class TransformersSecurityEngineProcessor7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor8:
-    """Enterprise production pipeline processor 8 for transformers.security."""
+class TransformersSecurityCoreWorker8:
+    """Enterprise production data pipeline component 8 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -289,6 +346,13 @@ class TransformersSecurityEngineProcessor8:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -300,13 +364,14 @@ class TransformersSecurityEngineProcessor8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor9:
-    """Enterprise production pipeline processor 9 for transformers.security."""
+class TransformersSecurityCoreWorker9:
+    """Enterprise production data pipeline component 9 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -324,6 +389,13 @@ class TransformersSecurityEngineProcessor9:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -335,13 +407,14 @@ class TransformersSecurityEngineProcessor9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor10:
-    """Enterprise production pipeline processor 10 for transformers.security."""
+class TransformersSecurityCoreWorker10:
+    """Enterprise production data pipeline component 10 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -359,6 +432,13 @@ class TransformersSecurityEngineProcessor10:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -370,13 +450,14 @@ class TransformersSecurityEngineProcessor10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor11:
-    """Enterprise production pipeline processor 11 for transformers.security."""
+class TransformersSecurityCoreWorker11:
+    """Enterprise production data pipeline component 11 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -394,6 +475,13 @@ class TransformersSecurityEngineProcessor11:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -405,13 +493,14 @@ class TransformersSecurityEngineProcessor11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor12:
-    """Enterprise production pipeline processor 12 for transformers.security."""
+class TransformersSecurityCoreWorker12:
+    """Enterprise production data pipeline component 12 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -429,6 +518,13 @@ class TransformersSecurityEngineProcessor12:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -440,13 +536,14 @@ class TransformersSecurityEngineProcessor12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor13:
-    """Enterprise production pipeline processor 13 for transformers.security."""
+class TransformersSecurityCoreWorker13:
+    """Enterprise production data pipeline component 13 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -464,6 +561,13 @@ class TransformersSecurityEngineProcessor13:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -475,13 +579,14 @@ class TransformersSecurityEngineProcessor13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor14:
-    """Enterprise production pipeline processor 14 for transformers.security."""
+class TransformersSecurityCoreWorker14:
+    """Enterprise production data pipeline component 14 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -499,6 +604,13 @@ class TransformersSecurityEngineProcessor14:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -510,13 +622,14 @@ class TransformersSecurityEngineProcessor14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor15:
-    """Enterprise production pipeline processor 15 for transformers.security."""
+class TransformersSecurityCoreWorker15:
+    """Enterprise production data pipeline component 15 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -534,6 +647,13 @@ class TransformersSecurityEngineProcessor15:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -545,13 +665,14 @@ class TransformersSecurityEngineProcessor15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor16:
-    """Enterprise production pipeline processor 16 for transformers.security."""
+class TransformersSecurityCoreWorker16:
+    """Enterprise production data pipeline component 16 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -569,6 +690,13 @@ class TransformersSecurityEngineProcessor16:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -580,13 +708,14 @@ class TransformersSecurityEngineProcessor16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor17:
-    """Enterprise production pipeline processor 17 for transformers.security."""
+class TransformersSecurityCoreWorker17:
+    """Enterprise production data pipeline component 17 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -604,6 +733,13 @@ class TransformersSecurityEngineProcessor17:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -615,13 +751,14 @@ class TransformersSecurityEngineProcessor17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor18:
-    """Enterprise production pipeline processor 18 for transformers.security."""
+class TransformersSecurityCoreWorker18:
+    """Enterprise production data pipeline component 18 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -639,6 +776,13 @@ class TransformersSecurityEngineProcessor18:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -650,13 +794,14 @@ class TransformersSecurityEngineProcessor18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor19:
-    """Enterprise production pipeline processor 19 for transformers.security."""
+class TransformersSecurityCoreWorker19:
+    """Enterprise production data pipeline component 19 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -674,6 +819,13 @@ class TransformersSecurityEngineProcessor19:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -685,13 +837,14 @@ class TransformersSecurityEngineProcessor19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor20:
-    """Enterprise production pipeline processor 20 for transformers.security."""
+class TransformersSecurityCoreWorker20:
+    """Enterprise production data pipeline component 20 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -709,6 +862,13 @@ class TransformersSecurityEngineProcessor20:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -720,13 +880,14 @@ class TransformersSecurityEngineProcessor20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor21:
-    """Enterprise production pipeline processor 21 for transformers.security."""
+class TransformersSecurityCoreWorker21:
+    """Enterprise production data pipeline component 21 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -744,6 +905,13 @@ class TransformersSecurityEngineProcessor21:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -755,13 +923,14 @@ class TransformersSecurityEngineProcessor21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor22:
-    """Enterprise production pipeline processor 22 for transformers.security."""
+class TransformersSecurityCoreWorker22:
+    """Enterprise production data pipeline component 22 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -779,6 +948,13 @@ class TransformersSecurityEngineProcessor22:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -790,13 +966,14 @@ class TransformersSecurityEngineProcessor22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor23:
-    """Enterprise production pipeline processor 23 for transformers.security."""
+class TransformersSecurityCoreWorker23:
+    """Enterprise production data pipeline component 23 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -814,6 +991,13 @@ class TransformersSecurityEngineProcessor23:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -825,13 +1009,14 @@ class TransformersSecurityEngineProcessor23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor24:
-    """Enterprise production pipeline processor 24 for transformers.security."""
+class TransformersSecurityCoreWorker24:
+    """Enterprise production data pipeline component 24 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -849,6 +1034,13 @@ class TransformersSecurityEngineProcessor24:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -860,13 +1052,14 @@ class TransformersSecurityEngineProcessor24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor25:
-    """Enterprise production pipeline processor 25 for transformers.security."""
+class TransformersSecurityCoreWorker25:
+    """Enterprise production data pipeline component 25 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -884,6 +1077,13 @@ class TransformersSecurityEngineProcessor25:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -895,13 +1095,14 @@ class TransformersSecurityEngineProcessor25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor26:
-    """Enterprise production pipeline processor 26 for transformers.security."""
+class TransformersSecurityCoreWorker26:
+    """Enterprise production data pipeline component 26 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -919,6 +1120,13 @@ class TransformersSecurityEngineProcessor26:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -930,13 +1138,14 @@ class TransformersSecurityEngineProcessor26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor27:
-    """Enterprise production pipeline processor 27 for transformers.security."""
+class TransformersSecurityCoreWorker27:
+    """Enterprise production data pipeline component 27 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -954,6 +1163,13 @@ class TransformersSecurityEngineProcessor27:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -965,13 +1181,14 @@ class TransformersSecurityEngineProcessor27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor28:
-    """Enterprise production pipeline processor 28 for transformers.security."""
+class TransformersSecurityCoreWorker28:
+    """Enterprise production data pipeline component 28 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -989,6 +1206,13 @@ class TransformersSecurityEngineProcessor28:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1000,13 +1224,14 @@ class TransformersSecurityEngineProcessor28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor29:
-    """Enterprise production pipeline processor 29 for transformers.security."""
+class TransformersSecurityCoreWorker29:
+    """Enterprise production data pipeline component 29 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1024,6 +1249,13 @@ class TransformersSecurityEngineProcessor29:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1035,13 +1267,14 @@ class TransformersSecurityEngineProcessor29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor30:
-    """Enterprise production pipeline processor 30 for transformers.security."""
+class TransformersSecurityCoreWorker30:
+    """Enterprise production data pipeline component 30 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1059,6 +1292,13 @@ class TransformersSecurityEngineProcessor30:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1070,13 +1310,14 @@ class TransformersSecurityEngineProcessor30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor31:
-    """Enterprise production pipeline processor 31 for transformers.security."""
+class TransformersSecurityCoreWorker31:
+    """Enterprise production data pipeline component 31 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1094,6 +1335,13 @@ class TransformersSecurityEngineProcessor31:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1105,13 +1353,14 @@ class TransformersSecurityEngineProcessor31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor32:
-    """Enterprise production pipeline processor 32 for transformers.security."""
+class TransformersSecurityCoreWorker32:
+    """Enterprise production data pipeline component 32 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1129,6 +1378,13 @@ class TransformersSecurityEngineProcessor32:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1140,13 +1396,14 @@ class TransformersSecurityEngineProcessor32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor33:
-    """Enterprise production pipeline processor 33 for transformers.security."""
+class TransformersSecurityCoreWorker33:
+    """Enterprise production data pipeline component 33 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1164,6 +1421,13 @@ class TransformersSecurityEngineProcessor33:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1175,13 +1439,14 @@ class TransformersSecurityEngineProcessor33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor34:
-    """Enterprise production pipeline processor 34 for transformers.security."""
+class TransformersSecurityCoreWorker34:
+    """Enterprise production data pipeline component 34 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1199,6 +1464,13 @@ class TransformersSecurityEngineProcessor34:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1210,13 +1482,14 @@ class TransformersSecurityEngineProcessor34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TransformersSecurityEngineProcessor35:
-    """Enterprise production pipeline processor 35 for transformers.security."""
+class TransformersSecurityCoreWorker35:
+    """Enterprise production data pipeline component 35 for transformers.security."""
     def __init__(self, node_id: str = 'transformers_security_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1234,40 +1507,12 @@ class TransformersSecurityEngineProcessor35:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersSecurityEngineProcessor36:
-    """Enterprise production pipeline processor 36 for transformers.security."""
-    def __init__(self, node_id: str = 'transformers_security_36', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_security'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
 
     def get_status(self) -> Dict[str, Any]:
         return {

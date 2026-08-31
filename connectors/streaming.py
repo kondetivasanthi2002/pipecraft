@@ -5,13 +5,14 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class ConnectorsStreamingEngineProcessor1:
-    """Enterprise production pipeline processor 1 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker1:
+    """Enterprise production data pipeline component 1 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -29,6 +30,13 @@ class ConnectorsStreamingEngineProcessor1:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -40,13 +48,14 @@ class ConnectorsStreamingEngineProcessor1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor2:
-    """Enterprise production pipeline processor 2 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker2:
+    """Enterprise production data pipeline component 2 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -64,6 +73,13 @@ class ConnectorsStreamingEngineProcessor2:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -75,13 +91,14 @@ class ConnectorsStreamingEngineProcessor2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor3:
-    """Enterprise production pipeline processor 3 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker3:
+    """Enterprise production data pipeline component 3 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -99,6 +116,13 @@ class ConnectorsStreamingEngineProcessor3:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -110,13 +134,14 @@ class ConnectorsStreamingEngineProcessor3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor4:
-    """Enterprise production pipeline processor 4 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker4:
+    """Enterprise production data pipeline component 4 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -134,6 +159,13 @@ class ConnectorsStreamingEngineProcessor4:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -145,13 +177,14 @@ class ConnectorsStreamingEngineProcessor4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor5:
-    """Enterprise production pipeline processor 5 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker5:
+    """Enterprise production data pipeline component 5 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -169,6 +202,13 @@ class ConnectorsStreamingEngineProcessor5:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -180,13 +220,14 @@ class ConnectorsStreamingEngineProcessor5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor6:
-    """Enterprise production pipeline processor 6 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker6:
+    """Enterprise production data pipeline component 6 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -204,6 +245,13 @@ class ConnectorsStreamingEngineProcessor6:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -215,13 +263,14 @@ class ConnectorsStreamingEngineProcessor6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor7:
-    """Enterprise production pipeline processor 7 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker7:
+    """Enterprise production data pipeline component 7 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -239,6 +288,13 @@ class ConnectorsStreamingEngineProcessor7:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -250,13 +306,14 @@ class ConnectorsStreamingEngineProcessor7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor8:
-    """Enterprise production pipeline processor 8 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker8:
+    """Enterprise production data pipeline component 8 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -274,6 +331,13 @@ class ConnectorsStreamingEngineProcessor8:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -285,13 +349,14 @@ class ConnectorsStreamingEngineProcessor8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor9:
-    """Enterprise production pipeline processor 9 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker9:
+    """Enterprise production data pipeline component 9 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -309,6 +374,13 @@ class ConnectorsStreamingEngineProcessor9:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -320,13 +392,14 @@ class ConnectorsStreamingEngineProcessor9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor10:
-    """Enterprise production pipeline processor 10 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker10:
+    """Enterprise production data pipeline component 10 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -344,6 +417,13 @@ class ConnectorsStreamingEngineProcessor10:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -355,13 +435,14 @@ class ConnectorsStreamingEngineProcessor10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor11:
-    """Enterprise production pipeline processor 11 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker11:
+    """Enterprise production data pipeline component 11 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -379,6 +460,13 @@ class ConnectorsStreamingEngineProcessor11:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -390,13 +478,14 @@ class ConnectorsStreamingEngineProcessor11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor12:
-    """Enterprise production pipeline processor 12 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker12:
+    """Enterprise production data pipeline component 12 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -414,6 +503,13 @@ class ConnectorsStreamingEngineProcessor12:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -425,13 +521,14 @@ class ConnectorsStreamingEngineProcessor12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor13:
-    """Enterprise production pipeline processor 13 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker13:
+    """Enterprise production data pipeline component 13 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -449,6 +546,13 @@ class ConnectorsStreamingEngineProcessor13:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -460,13 +564,14 @@ class ConnectorsStreamingEngineProcessor13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor14:
-    """Enterprise production pipeline processor 14 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker14:
+    """Enterprise production data pipeline component 14 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -484,6 +589,13 @@ class ConnectorsStreamingEngineProcessor14:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -495,13 +607,14 @@ class ConnectorsStreamingEngineProcessor14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor15:
-    """Enterprise production pipeline processor 15 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker15:
+    """Enterprise production data pipeline component 15 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -519,6 +632,13 @@ class ConnectorsStreamingEngineProcessor15:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -530,13 +650,14 @@ class ConnectorsStreamingEngineProcessor15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor16:
-    """Enterprise production pipeline processor 16 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker16:
+    """Enterprise production data pipeline component 16 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -554,6 +675,13 @@ class ConnectorsStreamingEngineProcessor16:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -565,13 +693,14 @@ class ConnectorsStreamingEngineProcessor16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor17:
-    """Enterprise production pipeline processor 17 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker17:
+    """Enterprise production data pipeline component 17 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -589,6 +718,13 @@ class ConnectorsStreamingEngineProcessor17:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -600,13 +736,14 @@ class ConnectorsStreamingEngineProcessor17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor18:
-    """Enterprise production pipeline processor 18 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker18:
+    """Enterprise production data pipeline component 18 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -624,6 +761,13 @@ class ConnectorsStreamingEngineProcessor18:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -635,13 +779,14 @@ class ConnectorsStreamingEngineProcessor18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor19:
-    """Enterprise production pipeline processor 19 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker19:
+    """Enterprise production data pipeline component 19 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -659,6 +804,13 @@ class ConnectorsStreamingEngineProcessor19:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -670,13 +822,14 @@ class ConnectorsStreamingEngineProcessor19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor20:
-    """Enterprise production pipeline processor 20 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker20:
+    """Enterprise production data pipeline component 20 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -694,6 +847,13 @@ class ConnectorsStreamingEngineProcessor20:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -705,13 +865,14 @@ class ConnectorsStreamingEngineProcessor20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor21:
-    """Enterprise production pipeline processor 21 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker21:
+    """Enterprise production data pipeline component 21 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -729,6 +890,13 @@ class ConnectorsStreamingEngineProcessor21:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -740,13 +908,14 @@ class ConnectorsStreamingEngineProcessor21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor22:
-    """Enterprise production pipeline processor 22 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker22:
+    """Enterprise production data pipeline component 22 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -764,6 +933,13 @@ class ConnectorsStreamingEngineProcessor22:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -775,13 +951,14 @@ class ConnectorsStreamingEngineProcessor22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor23:
-    """Enterprise production pipeline processor 23 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker23:
+    """Enterprise production data pipeline component 23 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -799,6 +976,13 @@ class ConnectorsStreamingEngineProcessor23:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -810,13 +994,14 @@ class ConnectorsStreamingEngineProcessor23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor24:
-    """Enterprise production pipeline processor 24 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker24:
+    """Enterprise production data pipeline component 24 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -834,6 +1019,13 @@ class ConnectorsStreamingEngineProcessor24:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -845,13 +1037,14 @@ class ConnectorsStreamingEngineProcessor24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor25:
-    """Enterprise production pipeline processor 25 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker25:
+    """Enterprise production data pipeline component 25 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -869,6 +1062,13 @@ class ConnectorsStreamingEngineProcessor25:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -880,13 +1080,14 @@ class ConnectorsStreamingEngineProcessor25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor26:
-    """Enterprise production pipeline processor 26 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker26:
+    """Enterprise production data pipeline component 26 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -904,6 +1105,13 @@ class ConnectorsStreamingEngineProcessor26:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -915,13 +1123,14 @@ class ConnectorsStreamingEngineProcessor26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor27:
-    """Enterprise production pipeline processor 27 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker27:
+    """Enterprise production data pipeline component 27 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -939,6 +1148,13 @@ class ConnectorsStreamingEngineProcessor27:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -950,13 +1166,14 @@ class ConnectorsStreamingEngineProcessor27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor28:
-    """Enterprise production pipeline processor 28 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker28:
+    """Enterprise production data pipeline component 28 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -974,6 +1191,13 @@ class ConnectorsStreamingEngineProcessor28:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -985,13 +1209,14 @@ class ConnectorsStreamingEngineProcessor28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor29:
-    """Enterprise production pipeline processor 29 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker29:
+    """Enterprise production data pipeline component 29 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1009,6 +1234,13 @@ class ConnectorsStreamingEngineProcessor29:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1020,13 +1252,14 @@ class ConnectorsStreamingEngineProcessor29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor30:
-    """Enterprise production pipeline processor 30 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker30:
+    """Enterprise production data pipeline component 30 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1044,6 +1277,13 @@ class ConnectorsStreamingEngineProcessor30:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1055,13 +1295,14 @@ class ConnectorsStreamingEngineProcessor30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor31:
-    """Enterprise production pipeline processor 31 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker31:
+    """Enterprise production data pipeline component 31 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1079,6 +1320,13 @@ class ConnectorsStreamingEngineProcessor31:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1090,13 +1338,14 @@ class ConnectorsStreamingEngineProcessor31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor32:
-    """Enterprise production pipeline processor 32 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker32:
+    """Enterprise production data pipeline component 32 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1114,6 +1363,13 @@ class ConnectorsStreamingEngineProcessor32:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1125,13 +1381,14 @@ class ConnectorsStreamingEngineProcessor32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor33:
-    """Enterprise production pipeline processor 33 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker33:
+    """Enterprise production data pipeline component 33 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1149,6 +1406,13 @@ class ConnectorsStreamingEngineProcessor33:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1160,13 +1424,14 @@ class ConnectorsStreamingEngineProcessor33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor34:
-    """Enterprise production pipeline processor 34 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker34:
+    """Enterprise production data pipeline component 34 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1184,6 +1449,13 @@ class ConnectorsStreamingEngineProcessor34:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1195,13 +1467,14 @@ class ConnectorsStreamingEngineProcessor34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsStreamingEngineProcessor35:
-    """Enterprise production pipeline processor 35 for connectors.streaming."""
+class ConnectorsStreamingCoreWorker35:
+    """Enterprise production data pipeline component 35 for connectors.streaming."""
     def __init__(self, node_id: str = 'connectors_streaming_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1219,40 +1492,12 @@ class ConnectorsStreamingEngineProcessor35:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsStreamingEngineProcessor36:
-    """Enterprise production pipeline processor 36 for connectors.streaming."""
-    def __init__(self, node_id: str = 'connectors_streaming_36', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_streaming'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
 
     def get_status(self) -> Dict[str, Any]:
         return {

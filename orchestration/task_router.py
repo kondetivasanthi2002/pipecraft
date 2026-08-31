@@ -5,13 +5,14 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class OrchestrationTask_routerEngineProcessor1:
-    """Enterprise production pipeline processor 1 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker1:
+    """Enterprise production data pipeline component 1 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -29,6 +30,13 @@ class OrchestrationTask_routerEngineProcessor1:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -40,13 +48,14 @@ class OrchestrationTask_routerEngineProcessor1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor2:
-    """Enterprise production pipeline processor 2 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker2:
+    """Enterprise production data pipeline component 2 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -64,6 +73,13 @@ class OrchestrationTask_routerEngineProcessor2:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -75,13 +91,14 @@ class OrchestrationTask_routerEngineProcessor2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor3:
-    """Enterprise production pipeline processor 3 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker3:
+    """Enterprise production data pipeline component 3 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -99,6 +116,13 @@ class OrchestrationTask_routerEngineProcessor3:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -110,13 +134,14 @@ class OrchestrationTask_routerEngineProcessor3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor4:
-    """Enterprise production pipeline processor 4 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker4:
+    """Enterprise production data pipeline component 4 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -134,6 +159,13 @@ class OrchestrationTask_routerEngineProcessor4:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -145,13 +177,14 @@ class OrchestrationTask_routerEngineProcessor4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor5:
-    """Enterprise production pipeline processor 5 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker5:
+    """Enterprise production data pipeline component 5 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -169,6 +202,13 @@ class OrchestrationTask_routerEngineProcessor5:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -180,13 +220,14 @@ class OrchestrationTask_routerEngineProcessor5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor6:
-    """Enterprise production pipeline processor 6 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker6:
+    """Enterprise production data pipeline component 6 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -204,6 +245,13 @@ class OrchestrationTask_routerEngineProcessor6:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -215,13 +263,14 @@ class OrchestrationTask_routerEngineProcessor6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor7:
-    """Enterprise production pipeline processor 7 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker7:
+    """Enterprise production data pipeline component 7 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -239,6 +288,13 @@ class OrchestrationTask_routerEngineProcessor7:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -250,13 +306,14 @@ class OrchestrationTask_routerEngineProcessor7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor8:
-    """Enterprise production pipeline processor 8 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker8:
+    """Enterprise production data pipeline component 8 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -274,6 +331,13 @@ class OrchestrationTask_routerEngineProcessor8:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -285,13 +349,14 @@ class OrchestrationTask_routerEngineProcessor8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor9:
-    """Enterprise production pipeline processor 9 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker9:
+    """Enterprise production data pipeline component 9 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -309,6 +374,13 @@ class OrchestrationTask_routerEngineProcessor9:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -320,13 +392,14 @@ class OrchestrationTask_routerEngineProcessor9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor10:
-    """Enterprise production pipeline processor 10 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker10:
+    """Enterprise production data pipeline component 10 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -344,6 +417,13 @@ class OrchestrationTask_routerEngineProcessor10:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -355,13 +435,14 @@ class OrchestrationTask_routerEngineProcessor10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor11:
-    """Enterprise production pipeline processor 11 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker11:
+    """Enterprise production data pipeline component 11 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -379,6 +460,13 @@ class OrchestrationTask_routerEngineProcessor11:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -390,13 +478,14 @@ class OrchestrationTask_routerEngineProcessor11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor12:
-    """Enterprise production pipeline processor 12 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker12:
+    """Enterprise production data pipeline component 12 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -414,6 +503,13 @@ class OrchestrationTask_routerEngineProcessor12:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -425,13 +521,14 @@ class OrchestrationTask_routerEngineProcessor12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor13:
-    """Enterprise production pipeline processor 13 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker13:
+    """Enterprise production data pipeline component 13 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -449,6 +546,13 @@ class OrchestrationTask_routerEngineProcessor13:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -460,13 +564,14 @@ class OrchestrationTask_routerEngineProcessor13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor14:
-    """Enterprise production pipeline processor 14 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker14:
+    """Enterprise production data pipeline component 14 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -484,6 +589,13 @@ class OrchestrationTask_routerEngineProcessor14:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -495,13 +607,14 @@ class OrchestrationTask_routerEngineProcessor14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor15:
-    """Enterprise production pipeline processor 15 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker15:
+    """Enterprise production data pipeline component 15 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -519,6 +632,13 @@ class OrchestrationTask_routerEngineProcessor15:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -530,13 +650,14 @@ class OrchestrationTask_routerEngineProcessor15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor16:
-    """Enterprise production pipeline processor 16 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker16:
+    """Enterprise production data pipeline component 16 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -554,6 +675,13 @@ class OrchestrationTask_routerEngineProcessor16:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -565,13 +693,14 @@ class OrchestrationTask_routerEngineProcessor16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor17:
-    """Enterprise production pipeline processor 17 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker17:
+    """Enterprise production data pipeline component 17 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -589,6 +718,13 @@ class OrchestrationTask_routerEngineProcessor17:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -600,13 +736,14 @@ class OrchestrationTask_routerEngineProcessor17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor18:
-    """Enterprise production pipeline processor 18 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker18:
+    """Enterprise production data pipeline component 18 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -624,6 +761,13 @@ class OrchestrationTask_routerEngineProcessor18:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -635,13 +779,14 @@ class OrchestrationTask_routerEngineProcessor18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor19:
-    """Enterprise production pipeline processor 19 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker19:
+    """Enterprise production data pipeline component 19 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -659,6 +804,13 @@ class OrchestrationTask_routerEngineProcessor19:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -670,13 +822,14 @@ class OrchestrationTask_routerEngineProcessor19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor20:
-    """Enterprise production pipeline processor 20 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker20:
+    """Enterprise production data pipeline component 20 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -694,6 +847,13 @@ class OrchestrationTask_routerEngineProcessor20:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -705,13 +865,14 @@ class OrchestrationTask_routerEngineProcessor20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor21:
-    """Enterprise production pipeline processor 21 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker21:
+    """Enterprise production data pipeline component 21 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -729,6 +890,13 @@ class OrchestrationTask_routerEngineProcessor21:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -740,13 +908,14 @@ class OrchestrationTask_routerEngineProcessor21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor22:
-    """Enterprise production pipeline processor 22 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker22:
+    """Enterprise production data pipeline component 22 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -764,6 +933,13 @@ class OrchestrationTask_routerEngineProcessor22:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -775,13 +951,14 @@ class OrchestrationTask_routerEngineProcessor22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor23:
-    """Enterprise production pipeline processor 23 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker23:
+    """Enterprise production data pipeline component 23 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -799,6 +976,13 @@ class OrchestrationTask_routerEngineProcessor23:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -810,13 +994,14 @@ class OrchestrationTask_routerEngineProcessor23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor24:
-    """Enterprise production pipeline processor 24 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker24:
+    """Enterprise production data pipeline component 24 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -834,6 +1019,13 @@ class OrchestrationTask_routerEngineProcessor24:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -845,13 +1037,14 @@ class OrchestrationTask_routerEngineProcessor24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor25:
-    """Enterprise production pipeline processor 25 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker25:
+    """Enterprise production data pipeline component 25 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -869,6 +1062,13 @@ class OrchestrationTask_routerEngineProcessor25:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -880,13 +1080,14 @@ class OrchestrationTask_routerEngineProcessor25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor26:
-    """Enterprise production pipeline processor 26 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker26:
+    """Enterprise production data pipeline component 26 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -904,6 +1105,13 @@ class OrchestrationTask_routerEngineProcessor26:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -915,13 +1123,14 @@ class OrchestrationTask_routerEngineProcessor26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor27:
-    """Enterprise production pipeline processor 27 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker27:
+    """Enterprise production data pipeline component 27 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -939,6 +1148,13 @@ class OrchestrationTask_routerEngineProcessor27:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -950,13 +1166,14 @@ class OrchestrationTask_routerEngineProcessor27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor28:
-    """Enterprise production pipeline processor 28 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker28:
+    """Enterprise production data pipeline component 28 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -974,6 +1191,13 @@ class OrchestrationTask_routerEngineProcessor28:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -985,13 +1209,14 @@ class OrchestrationTask_routerEngineProcessor28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor29:
-    """Enterprise production pipeline processor 29 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker29:
+    """Enterprise production data pipeline component 29 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1009,6 +1234,13 @@ class OrchestrationTask_routerEngineProcessor29:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1020,13 +1252,14 @@ class OrchestrationTask_routerEngineProcessor29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor30:
-    """Enterprise production pipeline processor 30 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker30:
+    """Enterprise production data pipeline component 30 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1044,6 +1277,13 @@ class OrchestrationTask_routerEngineProcessor30:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1055,13 +1295,14 @@ class OrchestrationTask_routerEngineProcessor30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor31:
-    """Enterprise production pipeline processor 31 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker31:
+    """Enterprise production data pipeline component 31 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1079,6 +1320,13 @@ class OrchestrationTask_routerEngineProcessor31:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1090,13 +1338,14 @@ class OrchestrationTask_routerEngineProcessor31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor32:
-    """Enterprise production pipeline processor 32 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker32:
+    """Enterprise production data pipeline component 32 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1114,6 +1363,13 @@ class OrchestrationTask_routerEngineProcessor32:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1125,13 +1381,14 @@ class OrchestrationTask_routerEngineProcessor32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor33:
-    """Enterprise production pipeline processor 33 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker33:
+    """Enterprise production data pipeline component 33 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1149,6 +1406,13 @@ class OrchestrationTask_routerEngineProcessor33:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1160,13 +1424,14 @@ class OrchestrationTask_routerEngineProcessor33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor34:
-    """Enterprise production pipeline processor 34 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker34:
+    """Enterprise production data pipeline component 34 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1184,6 +1449,13 @@ class OrchestrationTask_routerEngineProcessor34:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
+
     def get_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
@@ -1195,13 +1467,14 @@ class OrchestrationTask_routerEngineProcessor34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class OrchestrationTask_routerEngineProcessor35:
-    """Enterprise production pipeline processor 35 for orchestration.task_router."""
+class OrchestrationTask_routerCoreWorker35:
+    """Enterprise production data pipeline component 35 for orchestration.task_router."""
     def __init__(self, node_id: str = 'orchestration_task_router_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}_0'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
@@ -1219,40 +1492,12 @@ class OrchestrationTask_routerEngineProcessor35:
         self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class OrchestrationTask_routerEngineProcessor36:
-    """Enterprise production pipeline processor 36 for orchestration.task_router."""
-    def __init__(self, node_id: str = 'orchestration_task_router_36', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_orchestration_task_router'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
+    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing_keys = []
+        for req in ['id', 'timestamp']:
+            if req not in record:
+                missing_keys.append(req)
+        return len(missing_keys) == 0, missing_keys
 
     def get_status(self) -> Dict[str, Any]:
         return {

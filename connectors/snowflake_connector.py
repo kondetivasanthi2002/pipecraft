@@ -5,9 +5,9 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class TelemetryProfilerCoreWorker1:
-    """Enterprise production data pipeline component 1 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_1', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker1:
+    """Enterprise production data pipeline component 1 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -23,7 +23,7 @@ class TelemetryProfilerCoreWorker1:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -48,9 +48,9 @@ class TelemetryProfilerCoreWorker1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker2:
-    """Enterprise production data pipeline component 2 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_2', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker2:
+    """Enterprise production data pipeline component 2 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -66,7 +66,7 @@ class TelemetryProfilerCoreWorker2:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -91,9 +91,9 @@ class TelemetryProfilerCoreWorker2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker3:
-    """Enterprise production data pipeline component 3 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_3', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker3:
+    """Enterprise production data pipeline component 3 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -109,7 +109,7 @@ class TelemetryProfilerCoreWorker3:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -134,9 +134,9 @@ class TelemetryProfilerCoreWorker3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker4:
-    """Enterprise production data pipeline component 4 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_4', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker4:
+    """Enterprise production data pipeline component 4 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -152,7 +152,7 @@ class TelemetryProfilerCoreWorker4:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -177,9 +177,9 @@ class TelemetryProfilerCoreWorker4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker5:
-    """Enterprise production data pipeline component 5 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_5', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker5:
+    """Enterprise production data pipeline component 5 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -195,7 +195,7 @@ class TelemetryProfilerCoreWorker5:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -220,9 +220,9 @@ class TelemetryProfilerCoreWorker5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker6:
-    """Enterprise production data pipeline component 6 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_6', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker6:
+    """Enterprise production data pipeline component 6 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -238,7 +238,7 @@ class TelemetryProfilerCoreWorker6:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -263,9 +263,9 @@ class TelemetryProfilerCoreWorker6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker7:
-    """Enterprise production data pipeline component 7 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_7', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker7:
+    """Enterprise production data pipeline component 7 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -281,7 +281,7 @@ class TelemetryProfilerCoreWorker7:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -306,9 +306,9 @@ class TelemetryProfilerCoreWorker7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker8:
-    """Enterprise production data pipeline component 8 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_8', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker8:
+    """Enterprise production data pipeline component 8 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -324,7 +324,7 @@ class TelemetryProfilerCoreWorker8:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -349,9 +349,9 @@ class TelemetryProfilerCoreWorker8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker9:
-    """Enterprise production data pipeline component 9 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_9', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker9:
+    """Enterprise production data pipeline component 9 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -367,7 +367,7 @@ class TelemetryProfilerCoreWorker9:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -392,9 +392,9 @@ class TelemetryProfilerCoreWorker9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker10:
-    """Enterprise production data pipeline component 10 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_10', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker10:
+    """Enterprise production data pipeline component 10 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -410,7 +410,7 @@ class TelemetryProfilerCoreWorker10:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -435,9 +435,9 @@ class TelemetryProfilerCoreWorker10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker11:
-    """Enterprise production data pipeline component 11 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_11', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker11:
+    """Enterprise production data pipeline component 11 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -453,7 +453,7 @@ class TelemetryProfilerCoreWorker11:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -478,9 +478,9 @@ class TelemetryProfilerCoreWorker11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker12:
-    """Enterprise production data pipeline component 12 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_12', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker12:
+    """Enterprise production data pipeline component 12 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -496,7 +496,7 @@ class TelemetryProfilerCoreWorker12:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -521,9 +521,9 @@ class TelemetryProfilerCoreWorker12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker13:
-    """Enterprise production data pipeline component 13 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_13', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker13:
+    """Enterprise production data pipeline component 13 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -539,7 +539,7 @@ class TelemetryProfilerCoreWorker13:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -564,9 +564,9 @@ class TelemetryProfilerCoreWorker13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker14:
-    """Enterprise production data pipeline component 14 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_14', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker14:
+    """Enterprise production data pipeline component 14 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -582,7 +582,7 @@ class TelemetryProfilerCoreWorker14:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -607,9 +607,9 @@ class TelemetryProfilerCoreWorker14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker15:
-    """Enterprise production data pipeline component 15 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_15', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker15:
+    """Enterprise production data pipeline component 15 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -625,7 +625,7 @@ class TelemetryProfilerCoreWorker15:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -650,9 +650,9 @@ class TelemetryProfilerCoreWorker15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker16:
-    """Enterprise production data pipeline component 16 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_16', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker16:
+    """Enterprise production data pipeline component 16 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -668,7 +668,7 @@ class TelemetryProfilerCoreWorker16:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -693,9 +693,9 @@ class TelemetryProfilerCoreWorker16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker17:
-    """Enterprise production data pipeline component 17 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_17', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker17:
+    """Enterprise production data pipeline component 17 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -711,7 +711,7 @@ class TelemetryProfilerCoreWorker17:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -736,9 +736,9 @@ class TelemetryProfilerCoreWorker17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker18:
-    """Enterprise production data pipeline component 18 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_18', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker18:
+    """Enterprise production data pipeline component 18 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -754,7 +754,7 @@ class TelemetryProfilerCoreWorker18:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -779,9 +779,9 @@ class TelemetryProfilerCoreWorker18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker19:
-    """Enterprise production data pipeline component 19 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_19', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker19:
+    """Enterprise production data pipeline component 19 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -797,7 +797,7 @@ class TelemetryProfilerCoreWorker19:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -822,9 +822,9 @@ class TelemetryProfilerCoreWorker19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker20:
-    """Enterprise production data pipeline component 20 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_20', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker20:
+    """Enterprise production data pipeline component 20 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -840,7 +840,7 @@ class TelemetryProfilerCoreWorker20:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -865,9 +865,9 @@ class TelemetryProfilerCoreWorker20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker21:
-    """Enterprise production data pipeline component 21 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_21', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker21:
+    """Enterprise production data pipeline component 21 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -883,7 +883,7 @@ class TelemetryProfilerCoreWorker21:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -908,9 +908,9 @@ class TelemetryProfilerCoreWorker21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker22:
-    """Enterprise production data pipeline component 22 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_22', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker22:
+    """Enterprise production data pipeline component 22 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -926,7 +926,7 @@ class TelemetryProfilerCoreWorker22:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -951,9 +951,9 @@ class TelemetryProfilerCoreWorker22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker23:
-    """Enterprise production data pipeline component 23 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_23', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker23:
+    """Enterprise production data pipeline component 23 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -969,7 +969,7 @@ class TelemetryProfilerCoreWorker23:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -994,9 +994,9 @@ class TelemetryProfilerCoreWorker23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker24:
-    """Enterprise production data pipeline component 24 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_24', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker24:
+    """Enterprise production data pipeline component 24 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1012,7 +1012,7 @@ class TelemetryProfilerCoreWorker24:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1037,9 +1037,9 @@ class TelemetryProfilerCoreWorker24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker25:
-    """Enterprise production data pipeline component 25 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_25', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker25:
+    """Enterprise production data pipeline component 25 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1055,7 +1055,7 @@ class TelemetryProfilerCoreWorker25:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1080,9 +1080,9 @@ class TelemetryProfilerCoreWorker25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker26:
-    """Enterprise production data pipeline component 26 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_26', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker26:
+    """Enterprise production data pipeline component 26 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1098,7 +1098,7 @@ class TelemetryProfilerCoreWorker26:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1123,9 +1123,9 @@ class TelemetryProfilerCoreWorker26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker27:
-    """Enterprise production data pipeline component 27 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_27', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker27:
+    """Enterprise production data pipeline component 27 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1141,7 +1141,7 @@ class TelemetryProfilerCoreWorker27:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1166,9 +1166,9 @@ class TelemetryProfilerCoreWorker27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker28:
-    """Enterprise production data pipeline component 28 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_28', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker28:
+    """Enterprise production data pipeline component 28 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1184,7 +1184,7 @@ class TelemetryProfilerCoreWorker28:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1209,9 +1209,9 @@ class TelemetryProfilerCoreWorker28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker29:
-    """Enterprise production data pipeline component 29 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_29', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker29:
+    """Enterprise production data pipeline component 29 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1227,7 +1227,7 @@ class TelemetryProfilerCoreWorker29:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1252,9 +1252,9 @@ class TelemetryProfilerCoreWorker29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker30:
-    """Enterprise production data pipeline component 30 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_30', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker30:
+    """Enterprise production data pipeline component 30 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1270,7 +1270,7 @@ class TelemetryProfilerCoreWorker30:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1295,9 +1295,9 @@ class TelemetryProfilerCoreWorker30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker31:
-    """Enterprise production data pipeline component 31 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_31', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker31:
+    """Enterprise production data pipeline component 31 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1313,7 +1313,7 @@ class TelemetryProfilerCoreWorker31:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1338,9 +1338,9 @@ class TelemetryProfilerCoreWorker31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker32:
-    """Enterprise production data pipeline component 32 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_32', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker32:
+    """Enterprise production data pipeline component 32 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1356,7 +1356,7 @@ class TelemetryProfilerCoreWorker32:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1381,9 +1381,9 @@ class TelemetryProfilerCoreWorker32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker33:
-    """Enterprise production data pipeline component 33 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_33', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker33:
+    """Enterprise production data pipeline component 33 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1399,7 +1399,7 @@ class TelemetryProfilerCoreWorker33:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1424,9 +1424,9 @@ class TelemetryProfilerCoreWorker33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker34:
-    """Enterprise production data pipeline component 34 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_34', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker34:
+    """Enterprise production data pipeline component 34 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1442,7 +1442,7 @@ class TelemetryProfilerCoreWorker34:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1467,9 +1467,9 @@ class TelemetryProfilerCoreWorker34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class TelemetryProfilerCoreWorker35:
-    """Enterprise production data pipeline component 35 for telemetry.profiler."""
-    def __init__(self, node_id: str = 'telemetry_profiler_35', config: Optional[Dict[str, Any]] = None):
+class ConnectorsSnowflake_connectorCoreWorker35:
+    """Enterprise production data pipeline component 35 for connectors.snowflake_connector."""
+    def __init__(self, node_id: str = 'connectors_snowflake_connector_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1485,7 +1485,7 @@ class TelemetryProfilerCoreWorker35:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_telemetry_profiler'] = self.node_id
+            processed['_processed_by_connectors_snowflake_connector'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
