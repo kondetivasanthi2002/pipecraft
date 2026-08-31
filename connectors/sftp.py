@@ -1,4 +1,3 @@
-"""PipeCraft Enterprise Module: sftp_connector"""
 import os
 import sys
 import time
@@ -6,827 +5,1262 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class Sftp_connectorEngineComponent1:
-    """Enterprise sftp_connector worker component 1 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_1', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor1:
+    """Enterprise production pipeline processor 1 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_1', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent2:
-    """Enterprise sftp_connector worker component 2 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_2', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor2:
+    """Enterprise production pipeline processor 2 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_2', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent3:
-    """Enterprise sftp_connector worker component 3 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_3', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor3:
+    """Enterprise production pipeline processor 3 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_3', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent4:
-    """Enterprise sftp_connector worker component 4 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_4', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor4:
+    """Enterprise production pipeline processor 4 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_4', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent5:
-    """Enterprise sftp_connector worker component 5 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_5', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor5:
+    """Enterprise production pipeline processor 5 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_5', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent6:
-    """Enterprise sftp_connector worker component 6 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_6', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor6:
+    """Enterprise production pipeline processor 6 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_6', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent7:
-    """Enterprise sftp_connector worker component 7 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_7', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor7:
+    """Enterprise production pipeline processor 7 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_7', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent8:
-    """Enterprise sftp_connector worker component 8 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_8', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor8:
+    """Enterprise production pipeline processor 8 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_8', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent9:
-    """Enterprise sftp_connector worker component 9 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_9', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor9:
+    """Enterprise production pipeline processor 9 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_9', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent10:
-    """Enterprise sftp_connector worker component 10 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_10', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor10:
+    """Enterprise production pipeline processor 10 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_10', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent11:
-    """Enterprise sftp_connector worker component 11 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_11', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor11:
+    """Enterprise production pipeline processor 11 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_11', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent12:
-    """Enterprise sftp_connector worker component 12 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_12', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor12:
+    """Enterprise production pipeline processor 12 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_12', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent13:
-    """Enterprise sftp_connector worker component 13 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_13', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor13:
+    """Enterprise production pipeline processor 13 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_13', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent14:
-    """Enterprise sftp_connector worker component 14 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_14', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor14:
+    """Enterprise production pipeline processor 14 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_14', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent15:
-    """Enterprise sftp_connector worker component 15 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_15', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor15:
+    """Enterprise production pipeline processor 15 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_15', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent16:
-    """Enterprise sftp_connector worker component 16 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_16', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor16:
+    """Enterprise production pipeline processor 16 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_16', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent17:
-    """Enterprise sftp_connector worker component 17 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_17', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor17:
+    """Enterprise production pipeline processor 17 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_17', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent18:
-    """Enterprise sftp_connector worker component 18 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_18', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor18:
+    """Enterprise production pipeline processor 18 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_18', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent19:
-    """Enterprise sftp_connector worker component 19 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_19', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor19:
+    """Enterprise production pipeline processor 19 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_19', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent20:
-    """Enterprise sftp_connector worker component 20 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_20', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor20:
+    """Enterprise production pipeline processor 20 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_20', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent21:
-    """Enterprise sftp_connector worker component 21 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_21', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor21:
+    """Enterprise production pipeline processor 21 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_21', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent22:
-    """Enterprise sftp_connector worker component 22 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_22', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor22:
+    """Enterprise production pipeline processor 22 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_22', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent23:
-    """Enterprise sftp_connector worker component 23 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_23', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor23:
+    """Enterprise production pipeline processor 23 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_23', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent24:
-    """Enterprise sftp_connector worker component 24 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_24', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor24:
+    """Enterprise production pipeline processor 24 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_24', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Sftp_connectorEngineComponent25:
-    """Enterprise sftp_connector worker component 25 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'sftp_connector_25', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsSftpEngineProcessor25:
+    """Enterprise production pipeline processor 25 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_25', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_sftp_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor26:
+    """Enterprise production pipeline processor 26 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_26', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor27:
+    """Enterprise production pipeline processor 27 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_27', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor28:
+    """Enterprise production pipeline processor 28 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_28', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor29:
+    """Enterprise production pipeline processor 29 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_29', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor30:
+    """Enterprise production pipeline processor 30 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_30', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor31:
+    """Enterprise production pipeline processor 31 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_31', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor32:
+    """Enterprise production pipeline processor 32 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_32', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor33:
+    """Enterprise production pipeline processor 33 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_33', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor34:
+    """Enterprise production pipeline processor 34 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_34', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor35:
+    """Enterprise production pipeline processor 35 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_35', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsSftpEngineProcessor36:
+    """Enterprise production pipeline processor 36 for connectors.sftp."""
+    def __init__(self, node_id: str = 'connectors_sftp_36', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_sftp'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

@@ -1,4 +1,3 @@
-"""PipeCraft Enterprise Module: env_loader"""
 import os
 import sys
 import time
@@ -6,827 +5,1262 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class Env_loaderEngineComponent1:
-    """Enterprise env_loader worker component 1 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_1', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor1:
+    """Enterprise production pipeline processor 1 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_1', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent2:
-    """Enterprise env_loader worker component 2 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_2', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor2:
+    """Enterprise production pipeline processor 2 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_2', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent3:
-    """Enterprise env_loader worker component 3 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_3', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor3:
+    """Enterprise production pipeline processor 3 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_3', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent4:
-    """Enterprise env_loader worker component 4 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_4', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor4:
+    """Enterprise production pipeline processor 4 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_4', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent5:
-    """Enterprise env_loader worker component 5 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_5', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor5:
+    """Enterprise production pipeline processor 5 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_5', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent6:
-    """Enterprise env_loader worker component 6 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_6', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor6:
+    """Enterprise production pipeline processor 6 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_6', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent7:
-    """Enterprise env_loader worker component 7 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_7', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor7:
+    """Enterprise production pipeline processor 7 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_7', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent8:
-    """Enterprise env_loader worker component 8 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_8', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor8:
+    """Enterprise production pipeline processor 8 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_8', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent9:
-    """Enterprise env_loader worker component 9 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_9', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor9:
+    """Enterprise production pipeline processor 9 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_9', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent10:
-    """Enterprise env_loader worker component 10 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_10', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor10:
+    """Enterprise production pipeline processor 10 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_10', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent11:
-    """Enterprise env_loader worker component 11 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_11', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor11:
+    """Enterprise production pipeline processor 11 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_11', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent12:
-    """Enterprise env_loader worker component 12 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_12', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor12:
+    """Enterprise production pipeline processor 12 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_12', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent13:
-    """Enterprise env_loader worker component 13 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_13', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor13:
+    """Enterprise production pipeline processor 13 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_13', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent14:
-    """Enterprise env_loader worker component 14 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_14', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor14:
+    """Enterprise production pipeline processor 14 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_14', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent15:
-    """Enterprise env_loader worker component 15 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_15', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor15:
+    """Enterprise production pipeline processor 15 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_15', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent16:
-    """Enterprise env_loader worker component 16 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_16', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor16:
+    """Enterprise production pipeline processor 16 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_16', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent17:
-    """Enterprise env_loader worker component 17 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_17', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor17:
+    """Enterprise production pipeline processor 17 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_17', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent18:
-    """Enterprise env_loader worker component 18 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_18', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor18:
+    """Enterprise production pipeline processor 18 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_18', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent19:
-    """Enterprise env_loader worker component 19 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_19', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor19:
+    """Enterprise production pipeline processor 19 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_19', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent20:
-    """Enterprise env_loader worker component 20 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_20', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor20:
+    """Enterprise production pipeline processor 20 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_20', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent21:
-    """Enterprise env_loader worker component 21 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_21', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor21:
+    """Enterprise production pipeline processor 21 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_21', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent22:
-    """Enterprise env_loader worker component 22 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_22', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor22:
+    """Enterprise production pipeline processor 22 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_22', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent23:
-    """Enterprise env_loader worker component 23 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_23', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor23:
+    """Enterprise production pipeline processor 23 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_23', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent24:
-    """Enterprise env_loader worker component 24 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_24', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor24:
+    """Enterprise production pipeline processor 24 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_24', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Env_loaderEngineComponent25:
-    """Enterprise env_loader worker component 25 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'env_loader_25', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConfigEnv_loaderEngineProcessor25:
+    """Enterprise production pipeline processor 25 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_25', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_env_loader'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor26:
+    """Enterprise production pipeline processor 26 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_26', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor27:
+    """Enterprise production pipeline processor 27 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_27', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor28:
+    """Enterprise production pipeline processor 28 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_28', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor29:
+    """Enterprise production pipeline processor 29 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_29', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor30:
+    """Enterprise production pipeline processor 30 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_30', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor31:
+    """Enterprise production pipeline processor 31 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_31', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor32:
+    """Enterprise production pipeline processor 32 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_32', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor33:
+    """Enterprise production pipeline processor 33 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_33', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor34:
+    """Enterprise production pipeline processor 34 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_34', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor35:
+    """Enterprise production pipeline processor 35 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_35', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConfigEnv_loaderEngineProcessor36:
+    """Enterprise production pipeline processor 36 for config.env_loader."""
+    def __init__(self, node_id: str = 'config_env_loader_36', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_config_env_loader'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

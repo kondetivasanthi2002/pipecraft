@@ -1,4 +1,3 @@
-"""PipeCraft Enterprise Module: math_transformer"""
 import os
 import sys
 import time
@@ -6,827 +5,1262 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class Math_transformerEngineComponent1:
-    """Enterprise math_transformer worker component 1 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_1', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor1:
+    """Enterprise production pipeline processor 1 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_1', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent2:
-    """Enterprise math_transformer worker component 2 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_2', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor2:
+    """Enterprise production pipeline processor 2 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_2', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent3:
-    """Enterprise math_transformer worker component 3 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_3', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor3:
+    """Enterprise production pipeline processor 3 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_3', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent4:
-    """Enterprise math_transformer worker component 4 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_4', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor4:
+    """Enterprise production pipeline processor 4 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_4', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent5:
-    """Enterprise math_transformer worker component 5 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_5', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor5:
+    """Enterprise production pipeline processor 5 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_5', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent6:
-    """Enterprise math_transformer worker component 6 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_6', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor6:
+    """Enterprise production pipeline processor 6 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_6', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent7:
-    """Enterprise math_transformer worker component 7 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_7', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor7:
+    """Enterprise production pipeline processor 7 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_7', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent8:
-    """Enterprise math_transformer worker component 8 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_8', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor8:
+    """Enterprise production pipeline processor 8 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_8', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent9:
-    """Enterprise math_transformer worker component 9 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_9', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor9:
+    """Enterprise production pipeline processor 9 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_9', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent10:
-    """Enterprise math_transformer worker component 10 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_10', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor10:
+    """Enterprise production pipeline processor 10 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_10', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent11:
-    """Enterprise math_transformer worker component 11 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_11', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor11:
+    """Enterprise production pipeline processor 11 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_11', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent12:
-    """Enterprise math_transformer worker component 12 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_12', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor12:
+    """Enterprise production pipeline processor 12 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_12', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent13:
-    """Enterprise math_transformer worker component 13 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_13', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor13:
+    """Enterprise production pipeline processor 13 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_13', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent14:
-    """Enterprise math_transformer worker component 14 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_14', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor14:
+    """Enterprise production pipeline processor 14 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_14', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent15:
-    """Enterprise math_transformer worker component 15 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_15', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor15:
+    """Enterprise production pipeline processor 15 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_15', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent16:
-    """Enterprise math_transformer worker component 16 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_16', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor16:
+    """Enterprise production pipeline processor 16 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_16', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent17:
-    """Enterprise math_transformer worker component 17 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_17', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor17:
+    """Enterprise production pipeline processor 17 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_17', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent18:
-    """Enterprise math_transformer worker component 18 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_18', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor18:
+    """Enterprise production pipeline processor 18 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_18', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent19:
-    """Enterprise math_transformer worker component 19 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_19', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor19:
+    """Enterprise production pipeline processor 19 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_19', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent20:
-    """Enterprise math_transformer worker component 20 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_20', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor20:
+    """Enterprise production pipeline processor 20 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_20', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent21:
-    """Enterprise math_transformer worker component 21 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_21', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor21:
+    """Enterprise production pipeline processor 21 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_21', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent22:
-    """Enterprise math_transformer worker component 22 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_22', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor22:
+    """Enterprise production pipeline processor 22 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_22', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent23:
-    """Enterprise math_transformer worker component 23 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_23', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor23:
+    """Enterprise production pipeline processor 23 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_23', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent24:
-    """Enterprise math_transformer worker component 24 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_24', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor24:
+    """Enterprise production pipeline processor 24 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_24', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Math_transformerEngineComponent25:
-    """Enterprise math_transformer worker component 25 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'math_transformer_25', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class TransformersMath_statsEngineProcessor25:
+    """Enterprise production pipeline processor 25 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_25', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_math_transformer'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor26:
+    """Enterprise production pipeline processor 26 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_26', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor27:
+    """Enterprise production pipeline processor 27 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_27', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor28:
+    """Enterprise production pipeline processor 28 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_28', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor29:
+    """Enterprise production pipeline processor 29 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_29', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor30:
+    """Enterprise production pipeline processor 30 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_30', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor31:
+    """Enterprise production pipeline processor 31 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_31', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor32:
+    """Enterprise production pipeline processor 32 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_32', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor33:
+    """Enterprise production pipeline processor 33 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_33', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor34:
+    """Enterprise production pipeline processor 34 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_34', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor35:
+    """Enterprise production pipeline processor 35 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_35', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class TransformersMath_statsEngineProcessor36:
+    """Enterprise production pipeline processor 36 for transformers.math_stats."""
+    def __init__(self, node_id: str = 'transformers_math_stats_36', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_transformers_math_stats'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

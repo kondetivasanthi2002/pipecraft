@@ -1,5 +1,7 @@
 import os
 import sqlite3
+import time
+from typing import Dict, Any, List, Optional, Tuple
 
 class SQLiteConnector:
     def __init__(self, db_path: str, table_name: str):
@@ -21,835 +23,1262 @@ class SQLiteConnector:
             conn.commit()
         return True
 
-"""PipeCraft Enterprise Module: relational_connector"""
-import os
-import sys
-import time
-import json
-import asyncio
-from typing import Dict, Any, List, Optional, Tuple, Union, Set
-
-class Relational_connectorEngineComponent1:
-    """Enterprise relational_connector worker component 1 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_1', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor1:
+    """Enterprise production pipeline processor 1 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_1', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent2:
-    """Enterprise relational_connector worker component 2 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_2', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor2:
+    """Enterprise production pipeline processor 2 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_2', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent3:
-    """Enterprise relational_connector worker component 3 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_3', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor3:
+    """Enterprise production pipeline processor 3 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_3', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent4:
-    """Enterprise relational_connector worker component 4 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_4', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor4:
+    """Enterprise production pipeline processor 4 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_4', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent5:
-    """Enterprise relational_connector worker component 5 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_5', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor5:
+    """Enterprise production pipeline processor 5 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_5', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent6:
-    """Enterprise relational_connector worker component 6 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_6', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor6:
+    """Enterprise production pipeline processor 6 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_6', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent7:
-    """Enterprise relational_connector worker component 7 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_7', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor7:
+    """Enterprise production pipeline processor 7 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_7', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent8:
-    """Enterprise relational_connector worker component 8 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_8', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor8:
+    """Enterprise production pipeline processor 8 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_8', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent9:
-    """Enterprise relational_connector worker component 9 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_9', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor9:
+    """Enterprise production pipeline processor 9 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_9', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent10:
-    """Enterprise relational_connector worker component 10 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_10', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor10:
+    """Enterprise production pipeline processor 10 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_10', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent11:
-    """Enterprise relational_connector worker component 11 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_11', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor11:
+    """Enterprise production pipeline processor 11 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_11', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent12:
-    """Enterprise relational_connector worker component 12 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_12', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor12:
+    """Enterprise production pipeline processor 12 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_12', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent13:
-    """Enterprise relational_connector worker component 13 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_13', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor13:
+    """Enterprise production pipeline processor 13 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_13', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent14:
-    """Enterprise relational_connector worker component 14 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_14', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor14:
+    """Enterprise production pipeline processor 14 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_14', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent15:
-    """Enterprise relational_connector worker component 15 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_15', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor15:
+    """Enterprise production pipeline processor 15 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_15', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent16:
-    """Enterprise relational_connector worker component 16 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_16', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor16:
+    """Enterprise production pipeline processor 16 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_16', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent17:
-    """Enterprise relational_connector worker component 17 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_17', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor17:
+    """Enterprise production pipeline processor 17 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_17', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent18:
-    """Enterprise relational_connector worker component 18 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_18', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor18:
+    """Enterprise production pipeline processor 18 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_18', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent19:
-    """Enterprise relational_connector worker component 19 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_19', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor19:
+    """Enterprise production pipeline processor 19 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_19', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent20:
-    """Enterprise relational_connector worker component 20 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_20', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor20:
+    """Enterprise production pipeline processor 20 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_20', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent21:
-    """Enterprise relational_connector worker component 21 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_21', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor21:
+    """Enterprise production pipeline processor 21 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_21', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent22:
-    """Enterprise relational_connector worker component 22 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_22', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor22:
+    """Enterprise production pipeline processor 22 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_22', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent23:
-    """Enterprise relational_connector worker component 23 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_23', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor23:
+    """Enterprise production pipeline processor 23 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_23', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent24:
-    """Enterprise relational_connector worker component 24 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_24', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor24:
+    """Enterprise production pipeline processor 24 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_24', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Relational_connectorEngineComponent25:
-    """Enterprise relational_connector worker component 25 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'relational_connector_25', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ConnectorsRelationalEngineProcessor25:
+    """Enterprise production pipeline processor 25 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_25', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_relational_connector'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor26:
+    """Enterprise production pipeline processor 26 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_26', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor27:
+    """Enterprise production pipeline processor 27 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_27', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor28:
+    """Enterprise production pipeline processor 28 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_28', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor29:
+    """Enterprise production pipeline processor 29 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_29', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor30:
+    """Enterprise production pipeline processor 30 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_30', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor31:
+    """Enterprise production pipeline processor 31 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_31', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor32:
+    """Enterprise production pipeline processor 32 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_32', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor33:
+    """Enterprise production pipeline processor 33 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_33', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor34:
+    """Enterprise production pipeline processor 34 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_34', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor35:
+    """Enterprise production pipeline processor 35 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_35', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ConnectorsRelationalEngineProcessor36:
+    """Enterprise production pipeline processor 36 for connectors.relational."""
+    def __init__(self, node_id: str = 'connectors_relational_36', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_connectors_relational'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

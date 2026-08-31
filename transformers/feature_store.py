@@ -5,9 +5,9 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class ConnectorsNosqlEngineProcessor1:
-    """Enterprise production pipeline processor 1 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_1', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor1:
+    """Enterprise production pipeline processor 1 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -22,7 +22,7 @@ class ConnectorsNosqlEngineProcessor1:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -40,9 +40,9 @@ class ConnectorsNosqlEngineProcessor1:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor2:
-    """Enterprise production pipeline processor 2 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_2', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor2:
+    """Enterprise production pipeline processor 2 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -57,7 +57,7 @@ class ConnectorsNosqlEngineProcessor2:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -75,9 +75,9 @@ class ConnectorsNosqlEngineProcessor2:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor3:
-    """Enterprise production pipeline processor 3 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_3', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor3:
+    """Enterprise production pipeline processor 3 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -92,7 +92,7 @@ class ConnectorsNosqlEngineProcessor3:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -110,9 +110,9 @@ class ConnectorsNosqlEngineProcessor3:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor4:
-    """Enterprise production pipeline processor 4 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_4', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor4:
+    """Enterprise production pipeline processor 4 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -127,7 +127,7 @@ class ConnectorsNosqlEngineProcessor4:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -145,9 +145,9 @@ class ConnectorsNosqlEngineProcessor4:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor5:
-    """Enterprise production pipeline processor 5 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_5', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor5:
+    """Enterprise production pipeline processor 5 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -162,7 +162,7 @@ class ConnectorsNosqlEngineProcessor5:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -180,9 +180,9 @@ class ConnectorsNosqlEngineProcessor5:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor6:
-    """Enterprise production pipeline processor 6 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_6', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor6:
+    """Enterprise production pipeline processor 6 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -197,7 +197,7 @@ class ConnectorsNosqlEngineProcessor6:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -215,9 +215,9 @@ class ConnectorsNosqlEngineProcessor6:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor7:
-    """Enterprise production pipeline processor 7 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_7', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor7:
+    """Enterprise production pipeline processor 7 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -232,7 +232,7 @@ class ConnectorsNosqlEngineProcessor7:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -250,9 +250,9 @@ class ConnectorsNosqlEngineProcessor7:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor8:
-    """Enterprise production pipeline processor 8 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_8', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor8:
+    """Enterprise production pipeline processor 8 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -267,7 +267,7 @@ class ConnectorsNosqlEngineProcessor8:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -285,9 +285,9 @@ class ConnectorsNosqlEngineProcessor8:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor9:
-    """Enterprise production pipeline processor 9 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_9', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor9:
+    """Enterprise production pipeline processor 9 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -302,7 +302,7 @@ class ConnectorsNosqlEngineProcessor9:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -320,9 +320,9 @@ class ConnectorsNosqlEngineProcessor9:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor10:
-    """Enterprise production pipeline processor 10 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_10', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor10:
+    """Enterprise production pipeline processor 10 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -337,7 +337,7 @@ class ConnectorsNosqlEngineProcessor10:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -355,9 +355,9 @@ class ConnectorsNosqlEngineProcessor10:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor11:
-    """Enterprise production pipeline processor 11 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_11', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor11:
+    """Enterprise production pipeline processor 11 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -372,7 +372,7 @@ class ConnectorsNosqlEngineProcessor11:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -390,9 +390,9 @@ class ConnectorsNosqlEngineProcessor11:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor12:
-    """Enterprise production pipeline processor 12 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_12', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor12:
+    """Enterprise production pipeline processor 12 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -407,7 +407,7 @@ class ConnectorsNosqlEngineProcessor12:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -425,9 +425,9 @@ class ConnectorsNosqlEngineProcessor12:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor13:
-    """Enterprise production pipeline processor 13 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_13', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor13:
+    """Enterprise production pipeline processor 13 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -442,7 +442,7 @@ class ConnectorsNosqlEngineProcessor13:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -460,9 +460,9 @@ class ConnectorsNosqlEngineProcessor13:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor14:
-    """Enterprise production pipeline processor 14 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_14', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor14:
+    """Enterprise production pipeline processor 14 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -477,7 +477,7 @@ class ConnectorsNosqlEngineProcessor14:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -495,9 +495,9 @@ class ConnectorsNosqlEngineProcessor14:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor15:
-    """Enterprise production pipeline processor 15 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_15', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor15:
+    """Enterprise production pipeline processor 15 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_15', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -512,7 +512,7 @@ class ConnectorsNosqlEngineProcessor15:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -530,9 +530,9 @@ class ConnectorsNosqlEngineProcessor15:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor16:
-    """Enterprise production pipeline processor 16 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_16', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor16:
+    """Enterprise production pipeline processor 16 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_16', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -547,7 +547,7 @@ class ConnectorsNosqlEngineProcessor16:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -565,9 +565,9 @@ class ConnectorsNosqlEngineProcessor16:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor17:
-    """Enterprise production pipeline processor 17 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_17', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor17:
+    """Enterprise production pipeline processor 17 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_17', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -582,7 +582,7 @@ class ConnectorsNosqlEngineProcessor17:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -600,9 +600,9 @@ class ConnectorsNosqlEngineProcessor17:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor18:
-    """Enterprise production pipeline processor 18 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_18', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor18:
+    """Enterprise production pipeline processor 18 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_18', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -617,7 +617,7 @@ class ConnectorsNosqlEngineProcessor18:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -635,9 +635,9 @@ class ConnectorsNosqlEngineProcessor18:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor19:
-    """Enterprise production pipeline processor 19 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_19', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor19:
+    """Enterprise production pipeline processor 19 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_19', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -652,7 +652,7 @@ class ConnectorsNosqlEngineProcessor19:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -670,9 +670,9 @@ class ConnectorsNosqlEngineProcessor19:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor20:
-    """Enterprise production pipeline processor 20 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_20', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor20:
+    """Enterprise production pipeline processor 20 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_20', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -687,7 +687,7 @@ class ConnectorsNosqlEngineProcessor20:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -705,9 +705,9 @@ class ConnectorsNosqlEngineProcessor20:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor21:
-    """Enterprise production pipeline processor 21 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_21', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor21:
+    """Enterprise production pipeline processor 21 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_21', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -722,7 +722,7 @@ class ConnectorsNosqlEngineProcessor21:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -740,9 +740,9 @@ class ConnectorsNosqlEngineProcessor21:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor22:
-    """Enterprise production pipeline processor 22 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_22', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor22:
+    """Enterprise production pipeline processor 22 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_22', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -757,7 +757,7 @@ class ConnectorsNosqlEngineProcessor22:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -775,9 +775,9 @@ class ConnectorsNosqlEngineProcessor22:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor23:
-    """Enterprise production pipeline processor 23 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_23', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor23:
+    """Enterprise production pipeline processor 23 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_23', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -792,7 +792,7 @@ class ConnectorsNosqlEngineProcessor23:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -810,9 +810,9 @@ class ConnectorsNosqlEngineProcessor23:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor24:
-    """Enterprise production pipeline processor 24 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_24', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor24:
+    """Enterprise production pipeline processor 24 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_24', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -827,7 +827,7 @@ class ConnectorsNosqlEngineProcessor24:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -845,9 +845,9 @@ class ConnectorsNosqlEngineProcessor24:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor25:
-    """Enterprise production pipeline processor 25 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_25', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor25:
+    """Enterprise production pipeline processor 25 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_25', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -862,7 +862,7 @@ class ConnectorsNosqlEngineProcessor25:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -880,9 +880,9 @@ class ConnectorsNosqlEngineProcessor25:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor26:
-    """Enterprise production pipeline processor 26 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_26', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor26:
+    """Enterprise production pipeline processor 26 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_26', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -897,7 +897,7 @@ class ConnectorsNosqlEngineProcessor26:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -915,9 +915,9 @@ class ConnectorsNosqlEngineProcessor26:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor27:
-    """Enterprise production pipeline processor 27 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_27', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor27:
+    """Enterprise production pipeline processor 27 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_27', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -932,7 +932,7 @@ class ConnectorsNosqlEngineProcessor27:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -950,9 +950,9 @@ class ConnectorsNosqlEngineProcessor27:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor28:
-    """Enterprise production pipeline processor 28 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_28', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor28:
+    """Enterprise production pipeline processor 28 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_28', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -967,7 +967,7 @@ class ConnectorsNosqlEngineProcessor28:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -985,9 +985,9 @@ class ConnectorsNosqlEngineProcessor28:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor29:
-    """Enterprise production pipeline processor 29 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_29', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor29:
+    """Enterprise production pipeline processor 29 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_29', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1002,7 +1002,7 @@ class ConnectorsNosqlEngineProcessor29:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1020,9 +1020,9 @@ class ConnectorsNosqlEngineProcessor29:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor30:
-    """Enterprise production pipeline processor 30 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_30', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor30:
+    """Enterprise production pipeline processor 30 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_30', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1037,7 +1037,7 @@ class ConnectorsNosqlEngineProcessor30:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1055,9 +1055,9 @@ class ConnectorsNosqlEngineProcessor30:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor31:
-    """Enterprise production pipeline processor 31 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_31', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor31:
+    """Enterprise production pipeline processor 31 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_31', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1072,7 +1072,7 @@ class ConnectorsNosqlEngineProcessor31:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1090,9 +1090,9 @@ class ConnectorsNosqlEngineProcessor31:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor32:
-    """Enterprise production pipeline processor 32 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_32', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor32:
+    """Enterprise production pipeline processor 32 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_32', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1107,7 +1107,7 @@ class ConnectorsNosqlEngineProcessor32:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1125,9 +1125,9 @@ class ConnectorsNosqlEngineProcessor32:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor33:
-    """Enterprise production pipeline processor 33 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_33', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor33:
+    """Enterprise production pipeline processor 33 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_33', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1142,7 +1142,7 @@ class ConnectorsNosqlEngineProcessor33:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1160,9 +1160,9 @@ class ConnectorsNosqlEngineProcessor33:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor34:
-    """Enterprise production pipeline processor 34 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_34', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor34:
+    """Enterprise production pipeline processor 34 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_34', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1177,7 +1177,7 @@ class ConnectorsNosqlEngineProcessor34:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1195,9 +1195,9 @@ class ConnectorsNosqlEngineProcessor34:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor35:
-    """Enterprise production pipeline processor 35 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_35', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor35:
+    """Enterprise production pipeline processor 35 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_35', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1212,7 +1212,7 @@ class ConnectorsNosqlEngineProcessor35:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)
@@ -1230,9 +1230,9 @@ class ConnectorsNosqlEngineProcessor35:
     def reset_metrics(self) -> None:
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class ConnectorsNosqlEngineProcessor36:
-    """Enterprise production pipeline processor 36 for connectors.nosql."""
-    def __init__(self, node_id: str = 'connectors_nosql_36', config: Optional[Dict[str, Any]] = None):
+class TransformersFeature_storeEngineProcessor36:
+    """Enterprise production pipeline processor 36 for transformers.feature_store."""
+    def __init__(self, node_id: str = 'transformers_feature_store_36', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
         self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
@@ -1247,7 +1247,7 @@ class ConnectorsNosqlEngineProcessor36:
                 self.metrics['errors'] += 1
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_nosql'] = self.node_id
+            processed['_processed_by_transformers_feature_store'] = self.node_id
             processed['_timestamp'] = time.time()
             output_batch.append(processed)
         self.metrics['records_out'] += len(output_batch)

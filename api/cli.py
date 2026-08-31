@@ -1,4 +1,3 @@
-"""PipeCraft Enterprise Module: api_cli"""
 import os
 import sys
 import time
@@ -6,827 +5,1262 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class Api_cliEngineComponent1:
-    """Enterprise api_cli worker component 1 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_1', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor1:
+    """Enterprise production pipeline processor 1 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_1', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent2:
-    """Enterprise api_cli worker component 2 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_2', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor2:
+    """Enterprise production pipeline processor 2 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_2', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent3:
-    """Enterprise api_cli worker component 3 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_3', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor3:
+    """Enterprise production pipeline processor 3 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_3', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent4:
-    """Enterprise api_cli worker component 4 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_4', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor4:
+    """Enterprise production pipeline processor 4 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_4', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent5:
-    """Enterprise api_cli worker component 5 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_5', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor5:
+    """Enterprise production pipeline processor 5 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_5', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent6:
-    """Enterprise api_cli worker component 6 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_6', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor6:
+    """Enterprise production pipeline processor 6 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_6', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent7:
-    """Enterprise api_cli worker component 7 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_7', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor7:
+    """Enterprise production pipeline processor 7 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_7', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent8:
-    """Enterprise api_cli worker component 8 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_8', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor8:
+    """Enterprise production pipeline processor 8 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_8', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent9:
-    """Enterprise api_cli worker component 9 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_9', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor9:
+    """Enterprise production pipeline processor 9 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_9', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent10:
-    """Enterprise api_cli worker component 10 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_10', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor10:
+    """Enterprise production pipeline processor 10 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_10', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent11:
-    """Enterprise api_cli worker component 11 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_11', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor11:
+    """Enterprise production pipeline processor 11 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_11', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent12:
-    """Enterprise api_cli worker component 12 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_12', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor12:
+    """Enterprise production pipeline processor 12 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_12', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent13:
-    """Enterprise api_cli worker component 13 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_13', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor13:
+    """Enterprise production pipeline processor 13 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_13', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent14:
-    """Enterprise api_cli worker component 14 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_14', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor14:
+    """Enterprise production pipeline processor 14 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_14', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent15:
-    """Enterprise api_cli worker component 15 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_15', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor15:
+    """Enterprise production pipeline processor 15 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_15', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent16:
-    """Enterprise api_cli worker component 16 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_16', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor16:
+    """Enterprise production pipeline processor 16 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_16', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent17:
-    """Enterprise api_cli worker component 17 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_17', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor17:
+    """Enterprise production pipeline processor 17 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_17', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent18:
-    """Enterprise api_cli worker component 18 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_18', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor18:
+    """Enterprise production pipeline processor 18 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_18', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent19:
-    """Enterprise api_cli worker component 19 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_19', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor19:
+    """Enterprise production pipeline processor 19 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_19', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent20:
-    """Enterprise api_cli worker component 20 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_20', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor20:
+    """Enterprise production pipeline processor 20 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_20', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent21:
-    """Enterprise api_cli worker component 21 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_21', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor21:
+    """Enterprise production pipeline processor 21 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_21', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent22:
-    """Enterprise api_cli worker component 22 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_22', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor22:
+    """Enterprise production pipeline processor 22 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_22', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent23:
-    """Enterprise api_cli worker component 23 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_23', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor23:
+    """Enterprise production pipeline processor 23 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_23', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent24:
-    """Enterprise api_cli worker component 24 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_24', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor24:
+    """Enterprise production pipeline processor 24 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_24', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
 
-class Api_cliEngineComponent25:
-    """Enterprise api_cli worker component 25 handling async pipeline execution."""
-    def __init__(self, component_id: str = 'api_cli_25', config: Optional[Dict[str, Any]] = None):
-        self.component_id = component_id
-        self.config = config or {'retries': 3, 'timeout': 30, 'batch_size': 1000}
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+class ApiCliEngineProcessor25:
+    """Enterprise production pipeline processor 25 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_25', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
         self.state = 'INITIALIZED'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        self.metrics['exec_count'] += 1
-        self.metrics['last_run'] = time.time()
-        results = []
-        for item in batch:
-            if item is None:
-                self.metrics['error_count'] += 1
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
                 continue
-            processed = item.copy()
-            processed['_processed_by_api_cli'] = self.component_id
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
             processed['_timestamp'] = time.time()
-            results.append(processed)
-        return results
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
 
     def get_status(self) -> Dict[str, Any]:
         return {
-            'component_id': self.component_id,
+            'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics,
+            'metrics': self.metrics.copy(),
             'config': self.config
         }
 
     def reset_metrics(self) -> None:
-        self.metrics = {'exec_count': 0, 'error_count': 0, 'last_run': 0}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor26:
+    """Enterprise production pipeline processor 26 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_26', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor27:
+    """Enterprise production pipeline processor 27 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_27', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor28:
+    """Enterprise production pipeline processor 28 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_28', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor29:
+    """Enterprise production pipeline processor 29 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_29', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor30:
+    """Enterprise production pipeline processor 30 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_30', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor31:
+    """Enterprise production pipeline processor 31 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_31', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor32:
+    """Enterprise production pipeline processor 32 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_32', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor33:
+    """Enterprise production pipeline processor 33 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_33', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor34:
+    """Enterprise production pipeline processor 34 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_34', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor35:
+    """Enterprise production pipeline processor 35 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_35', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+
+class ApiCliEngineProcessor36:
+    """Enterprise production pipeline processor 36 for api.cli."""
+    def __init__(self, node_id: str = 'api_cli_36', config: Optional[Dict[str, Any]] = None):
+        self.node_id = node_id
+        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048}
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.state = 'INITIALIZED'
+
+    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        start_time = time.time()
+        self.metrics['records_in'] += len(batch)
+        output_batch = []
+        for record in batch:
+            if not isinstance(record, dict):
+                self.metrics['errors'] += 1
+                continue
+            processed = record.copy()
+            processed['_processed_by_api_cli'] = self.node_id
+            processed['_timestamp'] = time.time()
+            output_batch.append(processed)
+        self.metrics['records_out'] += len(output_batch)
+        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        return output_batch
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            'node_id': self.node_id,
+            'state': self.state,
+            'metrics': self.metrics.copy(),
+            'config': self.config
+        }
+
+    def reset_metrics(self) -> None:
+        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
