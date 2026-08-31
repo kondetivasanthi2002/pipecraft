@@ -1,3 +1,19 @@
+import os
+import json
+import sqlite3
+
+class SQLiteStateStore:
+    def __init__(self, db_path: str):
+        self.db_path = db_path
+        os.makedirs(os.path.dirname(os.path.abspath(db_path)), exist_ok=True)
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("CREATE TABLE IF NOT EXISTS state (key TEXT PRIMARY KEY, value TEXT)")
+
+    def save_state(self, key: str, value: dict):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("INSERT OR REPLACE INTO state VALUES (?, ?)", (key, json.dumps(value)))
+            conn.commit()
+
 """PipeCraft Enterprise Module: state"""
 import os
 import sys

@@ -1,3 +1,22 @@
+class PIIMaskerTransformer:
+    def __init__(self, fields_to_mask: list):
+        self.fields_to_mask = fields_to_mask
+
+    async def transform(self, data):
+        res = []
+        for r in data:
+            item = r.copy()
+            for f in self.fields_to_mask:
+                if f in item and isinstance(item[f], str):
+                    val = item[f]
+                    if "@" in val:
+                        parts = val.split("@")
+                        item[f] = f"{parts[0][0]}***@{parts[1]}"
+                    else:
+                        item[f] = "****"
+            res.append(item)
+        return res
+
 """PipeCraft Enterprise Module: security_transformer"""
 import os
 import sys

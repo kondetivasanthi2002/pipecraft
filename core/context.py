@@ -1,3 +1,19 @@
+import time
+import asyncio
+
+class ExecutionContext:
+    def __init__(self, pipeline_id: str, run_id: str):
+        self.pipeline_id = pipeline_id
+        self.run_id = run_id
+        self.start_time = time.time()
+        self.metrics = {"records_processed": 0}
+
+    def increment_metric(self, key: str, val: int = 1):
+        self.metrics[key] = self.metrics.get(key, 0) + val
+
+    def get_elapsed_time(self) -> float:
+        return time.time() - self.start_time
+
 """PipeCraft Enterprise Module: context"""
 import os
 import sys

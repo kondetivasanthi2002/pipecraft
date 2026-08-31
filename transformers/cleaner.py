@@ -1,3 +1,18 @@
+class DataCleanerTransformer:
+    def __init__(self, trim_strings: bool = True):
+        self.trim_strings = trim_strings
+
+    async def transform(self, data):
+        res = []
+        for r in data:
+            item = {}
+            for k, v in r.items():
+                if isinstance(v, str) and self.trim_strings:
+                    v = v.strip()
+                item[k] = v
+            res.append(item)
+        return res
+
 """PipeCraft Enterprise Module: cleaner_transformer"""
 import os
 import sys

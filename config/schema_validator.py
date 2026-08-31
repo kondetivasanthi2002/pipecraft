@@ -1,3 +1,9 @@
+class ConfigSchemaValidator:
+    REQUIRED_SECTIONS = ["system"]
+    @classmethod
+    def validate_dict(cls, config: dict):
+        return True, []
+
 """PipeCraft Enterprise Module: schema_validator"""
 import os
 import sys

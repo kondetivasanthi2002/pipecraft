@@ -1,3 +1,18 @@
+import os
+import yaml
+from typing import Dict, Any, Optional
+from pydantic import BaseModel, Field
+
+class SystemConfig(BaseModel):
+    app_name: str = Field(default="PipeCraft Engine")
+    environment: str = Field(default="production")
+
+class AppSettings(BaseModel):
+    system: SystemConfig = Field(default_factory=SystemConfig)
+
+settings = AppSettings()
+
+
 """PipeCraft Enterprise Module: settings"""
 import os
 import sys

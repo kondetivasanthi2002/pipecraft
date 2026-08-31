@@ -1,3 +1,26 @@
+import os
+import sqlite3
+
+class SQLiteConnector:
+    def __init__(self, db_path: str, table_name: str):
+        self.db_path = db_path
+        self.table_name = table_name
+
+    async def write(self, data):
+        if not data:
+            return True
+        os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
+        cols = list(data[0].keys())
+        col_defs = ", ".join([f"{c} TEXT" for c in cols])
+        placeholders = ", ".join(["?"] * len(cols))
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(f"CREATE TABLE IF NOT EXISTS {self.table_name} ({col_defs})")
+            for row in data:
+                vals = [str(row.get(c, "")) for c in cols]
+                conn.execute(f"INSERT INTO {self.table_name} VALUES ({placeholders})", vals)
+            conn.commit()
+        return True
+
 """PipeCraft Enterprise Module: relational_connector"""
 import os
 import sys

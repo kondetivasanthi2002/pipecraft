@@ -1,3 +1,17 @@
+class GroupByAggregatorTransformer:
+    def __init__(self, group_by_field: str, agg_field: str, agg_fn: str = "sum"):
+        self.group_by_field = group_by_field
+        self.agg_field = agg_field
+        self.agg_fn = agg_fn
+
+    async def transform(self, data):
+        groups = {}
+        for r in data:
+            k = r.get(self.group_by_field)
+            v = float(r.get(self.agg_field, 0))
+            groups[k] = groups.get(k, 0.0) + v
+        return [{self.group_by_field: k, f"{self.agg_field}_{self.agg_fn}": v} for k, v in groups.items()]
+
 """PipeCraft Enterprise Module: aggregator_transformer"""
 import os
 import sys

@@ -1,3 +1,17 @@
+import os
+import json
+
+class LocalFileConnector:
+    def __init__(self, filepath: str, mode: str = "w", format_type: str = "json"):
+        self.filepath = filepath
+        self.format_type = format_type
+
+    async def write(self, data):
+        os.makedirs(os.path.dirname(os.path.abspath(self.filepath)), exist_ok=True)
+        with open(self.filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+        return True
+
 """PipeCraft Enterprise Module: storage_connector"""
 import os
 import sys
