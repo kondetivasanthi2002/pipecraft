@@ -5,912 +5,1065 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class ConnectorsWebhookNodeComponent1:
-    """Production data pipeline module 1 for connectors.webhook."""
+class ConnectorsWebhookStrictPipelineWorker1:
     def __init__(self, node_id: str = 'connectors_webhook_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 1}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent2:
-    """Production data pipeline module 2 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker2:
     def __init__(self, node_id: str = 'connectors_webhook_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 2}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent3:
-    """Production data pipeline module 3 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker3:
     def __init__(self, node_id: str = 'connectors_webhook_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 3}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent4:
-    """Production data pipeline module 4 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker4:
     def __init__(self, node_id: str = 'connectors_webhook_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 4}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent5:
-    """Production data pipeline module 5 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker5:
     def __init__(self, node_id: str = 'connectors_webhook_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 5}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent6:
-    """Production data pipeline module 6 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker6:
     def __init__(self, node_id: str = 'connectors_webhook_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 6}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent7:
-    """Production data pipeline module 7 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker7:
     def __init__(self, node_id: str = 'connectors_webhook_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 7}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent8:
-    """Production data pipeline module 8 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker8:
     def __init__(self, node_id: str = 'connectors_webhook_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 8}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent9:
-    """Production data pipeline module 9 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker9:
     def __init__(self, node_id: str = 'connectors_webhook_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 9}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent10:
-    """Production data pipeline module 10 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker10:
     def __init__(self, node_id: str = 'connectors_webhook_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 10}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent11:
-    """Production data pipeline module 11 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker11:
     def __init__(self, node_id: str = 'connectors_webhook_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 11}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent12:
-    """Production data pipeline module 12 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker12:
     def __init__(self, node_id: str = 'connectors_webhook_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 12}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent13:
-    """Production data pipeline module 13 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker13:
     def __init__(self, node_id: str = 'connectors_webhook_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 13}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ConnectorsWebhookNodeComponent14:
-    """Production data pipeline module 14 for connectors.webhook."""
+
+class ConnectorsWebhookStrictPipelineWorker14:
     def __init__(self, node_id: str = 'connectors_webhook_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'connectors', 'module': 'webhook', 'idx': 14}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent15:
-    """Production data pipeline module 15 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_15', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent16:
-    """Production data pipeline module 16 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_16', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent17:
-    """Production data pipeline module 17 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_17', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent18:
-    """Production data pipeline module 18 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_18', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent19:
-    """Production data pipeline module 19 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_19', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent20:
-    """Production data pipeline module 20 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_20', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent21:
-    """Production data pipeline module 21 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_21', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent22:
-    """Production data pipeline module 22 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_22', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent23:
-    """Production data pipeline module 23 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_23', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent24:
-    """Production data pipeline module 24 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_24', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent25:
-    """Production data pipeline module 25 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_25', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ConnectorsWebhookNodeComponent26:
-    """Production data pipeline module 26 for connectors.webhook."""
-    def __init__(self, node_id: str = 'connectors_webhook_26', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_connectors_webhook'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

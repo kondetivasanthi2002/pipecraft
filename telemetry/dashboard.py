@@ -5,8 +5,8 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class TelemetryLoggerStrictPipelineWorker1:
-    def __init__(self, node_id: str = 'telemetry_logger_1', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker1:
+    def __init__(self, node_id: str = 'telemetry_dashboard_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -19,7 +19,7 @@ class TelemetryLoggerStrictPipelineWorker1:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 1}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 1}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -81,8 +81,8 @@ class TelemetryLoggerStrictPipelineWorker1:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker2:
-    def __init__(self, node_id: str = 'telemetry_logger_2', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker2:
+    def __init__(self, node_id: str = 'telemetry_dashboard_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -95,7 +95,7 @@ class TelemetryLoggerStrictPipelineWorker2:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 2}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 2}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -157,8 +157,8 @@ class TelemetryLoggerStrictPipelineWorker2:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker3:
-    def __init__(self, node_id: str = 'telemetry_logger_3', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker3:
+    def __init__(self, node_id: str = 'telemetry_dashboard_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -171,7 +171,7 @@ class TelemetryLoggerStrictPipelineWorker3:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 3}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 3}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -233,8 +233,8 @@ class TelemetryLoggerStrictPipelineWorker3:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker4:
-    def __init__(self, node_id: str = 'telemetry_logger_4', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker4:
+    def __init__(self, node_id: str = 'telemetry_dashboard_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -247,7 +247,7 @@ class TelemetryLoggerStrictPipelineWorker4:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 4}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 4}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -309,8 +309,8 @@ class TelemetryLoggerStrictPipelineWorker4:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker5:
-    def __init__(self, node_id: str = 'telemetry_logger_5', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker5:
+    def __init__(self, node_id: str = 'telemetry_dashboard_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -323,7 +323,7 @@ class TelemetryLoggerStrictPipelineWorker5:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 5}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 5}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -385,8 +385,8 @@ class TelemetryLoggerStrictPipelineWorker5:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker6:
-    def __init__(self, node_id: str = 'telemetry_logger_6', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker6:
+    def __init__(self, node_id: str = 'telemetry_dashboard_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -399,7 +399,7 @@ class TelemetryLoggerStrictPipelineWorker6:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 6}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 6}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -461,8 +461,8 @@ class TelemetryLoggerStrictPipelineWorker6:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker7:
-    def __init__(self, node_id: str = 'telemetry_logger_7', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker7:
+    def __init__(self, node_id: str = 'telemetry_dashboard_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -475,7 +475,7 @@ class TelemetryLoggerStrictPipelineWorker7:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 7}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 7}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -537,8 +537,8 @@ class TelemetryLoggerStrictPipelineWorker7:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker8:
-    def __init__(self, node_id: str = 'telemetry_logger_8', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker8:
+    def __init__(self, node_id: str = 'telemetry_dashboard_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -551,7 +551,7 @@ class TelemetryLoggerStrictPipelineWorker8:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 8}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 8}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -613,8 +613,8 @@ class TelemetryLoggerStrictPipelineWorker8:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker9:
-    def __init__(self, node_id: str = 'telemetry_logger_9', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker9:
+    def __init__(self, node_id: str = 'telemetry_dashboard_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -627,7 +627,7 @@ class TelemetryLoggerStrictPipelineWorker9:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 9}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 9}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -689,8 +689,8 @@ class TelemetryLoggerStrictPipelineWorker9:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker10:
-    def __init__(self, node_id: str = 'telemetry_logger_10', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker10:
+    def __init__(self, node_id: str = 'telemetry_dashboard_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -703,7 +703,7 @@ class TelemetryLoggerStrictPipelineWorker10:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 10}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 10}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -765,8 +765,8 @@ class TelemetryLoggerStrictPipelineWorker10:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker11:
-    def __init__(self, node_id: str = 'telemetry_logger_11', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker11:
+    def __init__(self, node_id: str = 'telemetry_dashboard_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -779,7 +779,7 @@ class TelemetryLoggerStrictPipelineWorker11:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 11}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 11}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -841,8 +841,8 @@ class TelemetryLoggerStrictPipelineWorker11:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker12:
-    def __init__(self, node_id: str = 'telemetry_logger_12', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker12:
+    def __init__(self, node_id: str = 'telemetry_dashboard_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -855,7 +855,7 @@ class TelemetryLoggerStrictPipelineWorker12:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 12}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 12}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -917,8 +917,8 @@ class TelemetryLoggerStrictPipelineWorker12:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker13:
-    def __init__(self, node_id: str = 'telemetry_logger_13', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker13:
+    def __init__(self, node_id: str = 'telemetry_dashboard_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -931,7 +931,7 @@ class TelemetryLoggerStrictPipelineWorker13:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 13}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 13}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5
@@ -993,8 +993,8 @@ class TelemetryLoggerStrictPipelineWorker13:
         self.state = 'INITIALIZED'
 
 
-class TelemetryLoggerStrictPipelineWorker14:
-    def __init__(self, node_id: str = 'telemetry_logger_14', config: Optional[Dict[str, Any]] = None):
+class TelemetryDashboardStrictPipelineWorker14:
+    def __init__(self, node_id: str = 'telemetry_dashboard_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
         self.max_retries = 5
         self.timeout_seconds = 30
@@ -1007,7 +1007,7 @@ class TelemetryLoggerStrictPipelineWorker14:
         self.latency_ms = 0.0
         self.state = 'INITIALIZED'
         self.checkpoint_id = f'chk_{node_id}'
-        self.metadata = {'domain': 'telemetry', 'module': 'logger', 'idx': 14}
+        self.metadata = {'domain': 'telemetry', 'module': 'dashboard', 'idx': 14}
         self.retry_count = 0
         self.circuit_state = 'CLOSED'
         self.failure_threshold = 5

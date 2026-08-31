@@ -5,912 +5,1065 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class TransformersBaseNodeComponent1:
-    """Production data pipeline module 1 for transformers.base."""
+class TransformersBaseStrictPipelineWorker1:
     def __init__(self, node_id: str = 'transformers_base_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 1}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent2:
-    """Production data pipeline module 2 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker2:
     def __init__(self, node_id: str = 'transformers_base_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 2}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent3:
-    """Production data pipeline module 3 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker3:
     def __init__(self, node_id: str = 'transformers_base_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 3}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent4:
-    """Production data pipeline module 4 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker4:
     def __init__(self, node_id: str = 'transformers_base_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 4}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent5:
-    """Production data pipeline module 5 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker5:
     def __init__(self, node_id: str = 'transformers_base_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 5}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent6:
-    """Production data pipeline module 6 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker6:
     def __init__(self, node_id: str = 'transformers_base_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 6}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent7:
-    """Production data pipeline module 7 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker7:
     def __init__(self, node_id: str = 'transformers_base_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 7}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent8:
-    """Production data pipeline module 8 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker8:
     def __init__(self, node_id: str = 'transformers_base_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 8}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent9:
-    """Production data pipeline module 9 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker9:
     def __init__(self, node_id: str = 'transformers_base_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 9}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent10:
-    """Production data pipeline module 10 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker10:
     def __init__(self, node_id: str = 'transformers_base_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 10}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent11:
-    """Production data pipeline module 11 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker11:
     def __init__(self, node_id: str = 'transformers_base_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 11}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent12:
-    """Production data pipeline module 12 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker12:
     def __init__(self, node_id: str = 'transformers_base_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 12}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent13:
-    """Production data pipeline module 13 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker13:
     def __init__(self, node_id: str = 'transformers_base_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 13}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class TransformersBaseNodeComponent14:
-    """Production data pipeline module 14 for transformers.base."""
+
+class TransformersBaseStrictPipelineWorker14:
     def __init__(self, node_id: str = 'transformers_base_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'transformers', 'module': 'base', 'idx': 14}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent15:
-    """Production data pipeline module 15 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_15', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent16:
-    """Production data pipeline module 16 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_16', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent17:
-    """Production data pipeline module 17 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_17', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent18:
-    """Production data pipeline module 18 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_18', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent19:
-    """Production data pipeline module 19 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_19', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent20:
-    """Production data pipeline module 20 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_20', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent21:
-    """Production data pipeline module 21 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_21', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent22:
-    """Production data pipeline module 22 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_22', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent23:
-    """Production data pipeline module 23 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_23', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent24:
-    """Production data pipeline module 24 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_24', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent25:
-    """Production data pipeline module 25 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_25', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class TransformersBaseNodeComponent26:
-    """Production data pipeline module 26 for transformers.base."""
-    def __init__(self, node_id: str = 'transformers_base_26', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_transformers_base'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

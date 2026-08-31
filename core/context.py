@@ -15,912 +15,1065 @@ class ExecutionContext:
     def get_elapsed_time(self) -> float:
         return time.time() - self.start_time
 
-class CoreContextNodeComponent1:
-    """Production data pipeline module 1 for core.context."""
+class CoreContextStrictPipelineWorker1:
     def __init__(self, node_id: str = 'core_context_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 1}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent2:
-    """Production data pipeline module 2 for core.context."""
+
+class CoreContextStrictPipelineWorker2:
     def __init__(self, node_id: str = 'core_context_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 2}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent3:
-    """Production data pipeline module 3 for core.context."""
+
+class CoreContextStrictPipelineWorker3:
     def __init__(self, node_id: str = 'core_context_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 3}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent4:
-    """Production data pipeline module 4 for core.context."""
+
+class CoreContextStrictPipelineWorker4:
     def __init__(self, node_id: str = 'core_context_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 4}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent5:
-    """Production data pipeline module 5 for core.context."""
+
+class CoreContextStrictPipelineWorker5:
     def __init__(self, node_id: str = 'core_context_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 5}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent6:
-    """Production data pipeline module 6 for core.context."""
+
+class CoreContextStrictPipelineWorker6:
     def __init__(self, node_id: str = 'core_context_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 6}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent7:
-    """Production data pipeline module 7 for core.context."""
+
+class CoreContextStrictPipelineWorker7:
     def __init__(self, node_id: str = 'core_context_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 7}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent8:
-    """Production data pipeline module 8 for core.context."""
+
+class CoreContextStrictPipelineWorker8:
     def __init__(self, node_id: str = 'core_context_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 8}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent9:
-    """Production data pipeline module 9 for core.context."""
+
+class CoreContextStrictPipelineWorker9:
     def __init__(self, node_id: str = 'core_context_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 9}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent10:
-    """Production data pipeline module 10 for core.context."""
+
+class CoreContextStrictPipelineWorker10:
     def __init__(self, node_id: str = 'core_context_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 10}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent11:
-    """Production data pipeline module 11 for core.context."""
+
+class CoreContextStrictPipelineWorker11:
     def __init__(self, node_id: str = 'core_context_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 11}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent12:
-    """Production data pipeline module 12 for core.context."""
+
+class CoreContextStrictPipelineWorker12:
     def __init__(self, node_id: str = 'core_context_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 12}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent13:
-    """Production data pipeline module 13 for core.context."""
+
+class CoreContextStrictPipelineWorker13:
     def __init__(self, node_id: str = 'core_context_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 13}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class CoreContextNodeComponent14:
-    """Production data pipeline module 14 for core.context."""
+
+class CoreContextStrictPipelineWorker14:
     def __init__(self, node_id: str = 'core_context_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'core', 'module': 'context', 'idx': 14}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def get_status(self) -> Dict[str, Any]:
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
+
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent15:
-    """Production data pipeline module 15 for core.context."""
-    def __init__(self, node_id: str = 'core_context_15', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent16:
-    """Production data pipeline module 16 for core.context."""
-    def __init__(self, node_id: str = 'core_context_16', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent17:
-    """Production data pipeline module 17 for core.context."""
-    def __init__(self, node_id: str = 'core_context_17', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent18:
-    """Production data pipeline module 18 for core.context."""
-    def __init__(self, node_id: str = 'core_context_18', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent19:
-    """Production data pipeline module 19 for core.context."""
-    def __init__(self, node_id: str = 'core_context_19', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent20:
-    """Production data pipeline module 20 for core.context."""
-    def __init__(self, node_id: str = 'core_context_20', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent21:
-    """Production data pipeline module 21 for core.context."""
-    def __init__(self, node_id: str = 'core_context_21', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent22:
-    """Production data pipeline module 22 for core.context."""
-    def __init__(self, node_id: str = 'core_context_22', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent23:
-    """Production data pipeline module 23 for core.context."""
-    def __init__(self, node_id: str = 'core_context_23', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent24:
-    """Production data pipeline module 24 for core.context."""
-    def __init__(self, node_id: str = 'core_context_24', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent25:
-    """Production data pipeline module 25 for core.context."""
-    def __init__(self, node_id: str = 'core_context_25', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class CoreContextNodeComponent26:
-    """Production data pipeline module 26 for core.context."""
-    def __init__(self, node_id: str = 'core_context_26', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 3, 'timeout_seconds': 30, 'buffer_size': 1024}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_core_context'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}

@@ -5,1722 +5,1065 @@ import json
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Set
 
-class ApiWebsocketPipelineExecutor1:
-    """Enterprise production data engineering engine module 1 for api.websocket."""
+class ApiWebsocketStrictPipelineWorker1:
     def __init__(self, node_id: str = 'api_websocket_1', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 1}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor2:
-    """Enterprise production data engineering engine module 2 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker2:
     def __init__(self, node_id: str = 'api_websocket_2', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 2}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor3:
-    """Enterprise production data engineering engine module 3 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker3:
     def __init__(self, node_id: str = 'api_websocket_3', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 3}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor4:
-    """Enterprise production data engineering engine module 4 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker4:
     def __init__(self, node_id: str = 'api_websocket_4', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 4}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor5:
-    """Enterprise production data engineering engine module 5 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker5:
     def __init__(self, node_id: str = 'api_websocket_5', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 5}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor6:
-    """Enterprise production data engineering engine module 6 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker6:
     def __init__(self, node_id: str = 'api_websocket_6', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 6}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor7:
-    """Enterprise production data engineering engine module 7 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker7:
     def __init__(self, node_id: str = 'api_websocket_7', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 7}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor8:
-    """Enterprise production data engineering engine module 8 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker8:
     def __init__(self, node_id: str = 'api_websocket_8', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 8}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor9:
-    """Enterprise production data engineering engine module 9 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker9:
     def __init__(self, node_id: str = 'api_websocket_9', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 9}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor10:
-    """Enterprise production data engineering engine module 10 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker10:
     def __init__(self, node_id: str = 'api_websocket_10', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 10}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor11:
-    """Enterprise production data engineering engine module 11 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker11:
     def __init__(self, node_id: str = 'api_websocket_11', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 11}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor12:
-    """Enterprise production data engineering engine module 12 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker12:
     def __init__(self, node_id: str = 'api_websocket_12', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 12}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor13:
-    """Enterprise production data engineering engine module 13 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker13:
     def __init__(self, node_id: str = 'api_websocket_13', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 13}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
+        self.state = 'INITIALIZED'
 
-class ApiWebsocketPipelineExecutor14:
-    """Enterprise production data engineering engine module 14 for api.websocket."""
+
+class ApiWebsocketStrictPipelineWorker14:
     def __init__(self, node_id: str = 'api_websocket_14', config: Optional[Dict[str, Any]] = None):
         self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+        self.max_retries = 5
+        self.timeout_seconds = 30
+        self.buffer_size = 2048
+        self.strict_mode = True
+        self.created_at = time.time()
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
+        self.checkpoint_id = f'chk_{node_id}'
+        self.metadata = {'domain': 'api', 'module': 'websocket', 'idx': 14}
+        self.retry_count = 0
+        self.circuit_state = 'CLOSED'
+        self.failure_threshold = 5
+        self.recovery_timeout = 30.0
+        self.last_failure_time = 0.0
+        self.batch_queue = []
+        self.processed_keys = set()
+        self.dead_letter_queue = []
+        self.error_handlers = []
+        self.metrics_history = []
+        self.schema_definition = {'id': 'str', 'timestamp': 'float'}
+        self.version = '2.5.0'
+        self.is_active = True
+        self.parent_dag_id = 'default'
+        self.node_type = 'PROCESSOR'
 
     async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         start_time = time.time()
-        self.metrics['records_in'] += len(batch)
+        self.records_in += len(batch)
         output_batch = []
         for record in batch:
             if not isinstance(record, dict):
-                self.metrics['errors'] += 1
+                self.errors_count += 1
+                self.dead_letter_queue.append(record)
                 continue
             processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
+            processed['_node_id'] = self.node_id
+            processed['_processed_at'] = time.time()
+            processed['_seq_idx'] = len(output_batch)
             output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
+        self.records_out += len(output_batch)
+        self.latency_ms = (time.time() - start_time) * 1000.0
         return output_batch
 
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
+    def validate_record_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        missing = []
+        if 'id' not in record:
+            missing.append('id')
+        if 'timestamp' not in record:
+            missing.append('timestamp')
+        return len(missing) == 0, missing
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_component_status(self) -> Dict[str, Any]:
         return {
             'node_id': self.node_id,
             'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
+            'records_in': self.records_in,
+            'records_out': self.records_out,
+            'errors': self.errors_count,
+            'latency_ms': self.latency_ms,
+            'is_active': self.is_active
         }
 
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor15:
-    """Enterprise production data engineering engine module 15 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_15', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
+    def reset_component_state(self) -> None:
+        self.records_in = 0
+        self.records_out = 0
+        self.errors_count = 0
+        self.latency_ms = 0.0
         self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor16:
-    """Enterprise production data engineering engine module 16 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_16', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor17:
-    """Enterprise production data engineering engine module 17 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_17', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor18:
-    """Enterprise production data engineering engine module 18 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_18', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor19:
-    """Enterprise production data engineering engine module 19 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_19', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor20:
-    """Enterprise production data engineering engine module 20 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_20', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor21:
-    """Enterprise production data engineering engine module 21 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_21', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor22:
-    """Enterprise production data engineering engine module 22 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_22', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor23:
-    """Enterprise production data engineering engine module 23 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_23', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor24:
-    """Enterprise production data engineering engine module 24 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_24', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor25:
-    """Enterprise production data engineering engine module 25 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_25', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor26:
-    """Enterprise production data engineering engine module 26 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_26', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor27:
-    """Enterprise production data engineering engine module 27 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_27', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor28:
-    """Enterprise production data engineering engine module 28 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_28', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor29:
-    """Enterprise production data engineering engine module 29 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_29', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor30:
-    """Enterprise production data engineering engine module 30 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_30', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor31:
-    """Enterprise production data engineering engine module 31 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_31', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor32:
-    """Enterprise production data engineering engine module 32 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_32', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor33:
-    """Enterprise production data engineering engine module 33 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_33', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor34:
-    """Enterprise production data engineering engine module 34 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_34', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor35:
-    """Enterprise production data engineering engine module 35 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_35', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor36:
-    """Enterprise production data engineering engine module 36 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_36', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor37:
-    """Enterprise production data engineering engine module 37 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_37', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor38:
-    """Enterprise production data engineering engine module 38 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_38', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor39:
-    """Enterprise production data engineering engine module 39 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_39', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-
-class ApiWebsocketPipelineExecutor40:
-    """Enterprise production data engineering engine module 40 for api.websocket."""
-    def __init__(self, node_id: str = 'api_websocket_40', config: Optional[Dict[str, Any]] = None):
-        self.node_id = node_id
-        self.config = config or {'max_retries': 5, 'timeout_seconds': 60, 'buffer_size': 2048, 'strict_mode': True}
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
-        self.state = 'INITIALIZED'
-        self.checkpoint_id = f'chk_{node_id}_0'
-
-    async def process_batch(self, batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        start_time = time.time()
-        self.metrics['records_in'] += len(batch)
-        output_batch = []
-        for record in batch:
-            if not isinstance(record, dict):
-                self.metrics['errors'] += 1
-                continue
-            processed = record.copy()
-            processed['_processed_by_api_websocket'] = self.node_id
-            processed['_timestamp'] = time.time()
-            output_batch.append(processed)
-        self.metrics['records_out'] += len(output_batch)
-        self.metrics['latency_ms'] = (time.time() - start_time) * 1000.0
-        return output_batch
-
-    def validate_schema(self, record: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        missing_keys = []
-        for req in ['id', 'timestamp']:
-            if req not in record:
-                missing_keys.append(req)
-        return len(missing_keys) == 0, missing_keys
-
-    def get_status(self) -> Dict[str, Any]:
-        return {
-            'node_id': self.node_id,
-            'state': self.state,
-            'metrics': self.metrics.copy(),
-            'config': self.config
-        }
-
-    def reset_metrics(self) -> None:
-        self.metrics = {'records_in': 0, 'records_out': 0, 'errors': 0, 'latency_ms': 0.0}
